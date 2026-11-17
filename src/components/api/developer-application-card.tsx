@@ -219,7 +219,7 @@ export function DeveloperApplicationCard({
             <p className="mt-1 text-xs text-red-700 dark:text-red-300">
               {application?.adminNotes
                 ? `Reason: ${application.adminNotes}`
-                : "Your API access has been temporarily suspended. Please contact CapeCoast support for reinstatement."}
+                : "Your API access has been temporarily suspended. Please contact pycbundles support for reinstatement."}
             </p>
           </div>
         </div>
@@ -236,7 +236,7 @@ export function DeveloperApplicationCard({
             Developer Program
           </span>
           <h2 className="mt-3 text-xl font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
-            Connect your website or application to CapeCoast and automate data orders.
+            Connect your website or application to pycbundles and automate data orders.
           </h2>
           <p className="mt-2 text-sm text-[#5A606B] dark:text-[#949AA6]">
             Get direct API access to dispatch MTN, Telecel, and AirtelTigo data bundles programmatically from your e-commerce storefront, mobile app, or reseller portal.
@@ -300,7 +300,7 @@ export function DeveloperApplicationCard({
                 <textarea
                   required
                   rows={3}
-                  placeholder="Describe your platform and how you will use the CapeCoast API..."
+                  placeholder="Describe your platform and how you will use the pycbundles API..."
                   value={usageDescription}
                   onChange={(e) => setUsageDescription(e.target.value)}
                   className="w-full rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-900 placeholder:text-slate-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500"
@@ -398,7 +398,7 @@ export function DeveloperApplicationCard({
                 <label htmlFor="terms" className="text-xs text-slate-600 dark:text-slate-400">
                   I agree to the{" "}
                   <Link href="/terms" target="_blank" className="font-semibold text-[#1D4ED8] hover:underline dark:text-[#3B82F6]">
-                    CapeCoast Terms of Service
+                    pycbundles Terms of Service
                   </Link>{" "}
                   and understand that automated order fulfillment will debit from my account balance.
                 </label>

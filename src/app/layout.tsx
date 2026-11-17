@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "CapeCoast — Telecom & Data Distribution",
+  title: "pycbundles — Telecom & Data Distribution",
   description:
     "Ghana's precision telecom and data bundle distribution platform for MTN, Telecel, and AirtelTigo.",
   icons: {

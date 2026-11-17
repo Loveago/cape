@@ -177,7 +177,7 @@ function RegisterForm() {
         return;
       }
 
-      toast("Account created. Welcome to CapeCoast!", "success");
+      toast("Account created. Welcome to pycbundles!", "success");
       router.push("/dashboard");
       router.refresh();
     } catch {
@@ -190,7 +190,7 @@ function RegisterForm() {
   return (
     <AuthShell
       title="Create your account"
-      subtitle="Start dispatching data bundles on CapeCoast"
+      subtitle="Start dispatching data bundles on pycbundles"
     >
       {/* Payment Redirecting Modal / Prompt */}
       {redirectingPayment && (

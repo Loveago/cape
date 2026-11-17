@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Refund and Cancellation Policy — CapeCoast",
+  title: "Refund and Cancellation Policy — pycbundles",
   description:
-    "Refund and Cancellation Policy for data bundle top-ups, unverified recipient numbers, wallet reversals, and MoMo disputes on capecoast.gh.",
+    "Refund and Cancellation Policy for data bundle top-ups, unverified recipient numbers, wallet reversals, and MoMo disputes on pycbundles.com.",
 };
 
 export default function RefundPolicyPage() {
@@ -34,7 +34,7 @@ export default function RefundPolicyPage() {
         {/* Preamble */}
         <section className="space-y-3">
           <p className="text-base leading-relaxed">
-            At <strong className="text-slate-900 dark:text-white">capecoast.gh</strong>, we strive to provide reliable and automated data bundle delivery. Because data bundles are digital services consumed immediately upon transfer, this Refund and Cancellation Policy outlines the conditions under which transactions may be cancelled or refunded.
+            At <strong className="text-slate-900 dark:text-white">pycbundles.com</strong>, we strive to provide reliable and automated data bundle delivery. Because data bundles are digital services consumed immediately upon transfer, this Refund and Cancellation Policy outlines the conditions under which transactions may be cancelled or refunded.
           </p>
         </section>
 
@@ -175,7 +175,7 @@ export default function RefundPolicyPage() {
                 Wallet Credit
               </h3>
               <p className="text-slate-600 dark:text-slate-400 text-sm">
-                For registered users, agents, and resellers, refunds are typically credited to your CapeCoast account wallet <strong className="text-slate-900 dark:text-white">instantly upon approval</strong>, enabling immediate re-orders without delay.
+                For registered users, agents, and resellers, refunds are typically credited to your pycbundles account wallet <strong className="text-slate-900 dark:text-white">instantly upon approval</strong>, enabling immediate re-orders without delay.
               </p>
             </div>
 
@@ -210,8 +210,8 @@ export default function RefundPolicyPage() {
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-white/5 dark:bg-slate-950/40 space-y-1">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Support Email</span>
                 <p className="font-bold text-slate-900 dark:text-white text-sm break-all">
-                  <a href="mailto:dzrahfelix@gmail.com" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                    dzrahfelix@gmail.com
+                  <a href="mailto:spyeboah@gmail.com" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                    spyeboah@gmail.com
                   </a>
                 </p>
               </div>
@@ -219,11 +219,11 @@ export default function RefundPolicyPage() {
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-white/5 dark:bg-slate-950/40 space-y-1">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">WhatsApp / Phone</span>
                 <p className="font-bold text-slate-900 dark:text-white text-sm">
-                  <a href="https://wa.me/233242319697" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                    0242319697
+                  <a href="https://wa.me/233241349656" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                    0241349656
                   </a>
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">+233 24 231 9697</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">+233 24 134 9656</p>
               </div>
 
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-white/5 dark:bg-slate-950/40 space-y-1">

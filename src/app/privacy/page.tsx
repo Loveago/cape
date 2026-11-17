@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — CapeCoast",
+  title: "Privacy Policy — pycbundles",
   description:
-    "Privacy Policy and data governance compliance under the Data Protection Act, 2012 (Act 843) of Ghana for capecoast.gh users, agents, and buyers.",
+    "Privacy Policy and data governance compliance under the Data Protection Act, 2012 (Act 843) of Ghana for pycbundles.com users, agents, and buyers.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -27,13 +27,13 @@ export default function PrivacyPolicyPage() {
       title="Privacy Policy"
       badge="Data Protection Act (Act 843)"
       lastUpdated="Last Updated: 1st October, 2026"
-      description="capecoast.gh is committed to safeguarding your personal data in full compliance with the Data Protection Act, 2012 (Act 843) of the Republic of Ghana."
+      description="pycbundles.com is committed to safeguarding your personal data in full compliance with the Data Protection Act, 2012 (Act 843) of the Republic of Ghana."
     >
       <div className="space-y-10 text-slate-700 dark:text-slate-300">
         {/* Preamble */}
         <section className="space-y-3">
           <p className="text-base leading-relaxed">
-            <strong className="text-slate-900 dark:text-white">capecoast.gh</strong> (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is dedicated to protecting your personal information. This Privacy Policy outlines our data handling practices in compliance with the <strong className="text-slate-900 dark:text-white">Data Protection Act, 2012 (Act 843) of Ghana</strong>.
+            <strong className="text-slate-900 dark:text-white">pycbundles.com</strong> (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is dedicated to protecting your personal information. This Privacy Policy outlines our data handling practices in compliance with the <strong className="text-slate-900 dark:text-white">Data Protection Act, 2012 (Act 843) of Ghana</strong>.
           </p>
         </section>
 
@@ -123,7 +123,7 @@ export default function PrivacyPolicyPage() {
                 <strong className="text-slate-900 dark:text-white">Mobile Network Operators (MTN Ghana, Telecel Ghana, AirtelTigo):</strong> Recipient phone numbers and purchase specifications are shared to provision data bundles.
               </li>
               <li>
-                <strong className="text-slate-900 dark:text-white">Payment Processors (Paystack):</strong> Payment card details and Mobile Money details are handled directly by Paystack via encrypted, PCI-DSS compliant interfaces. CapeCoast does not store your payment PINs or card credentials.
+                <strong className="text-slate-900 dark:text-white">Payment Processors (Paystack):</strong> Payment card details and Mobile Money details are handled directly by Paystack via encrypted, PCI-DSS compliant interfaces. pycbundles does not store your payment PINs or card credentials.
               </li>
               <li>
                 <strong className="text-slate-900 dark:text-white">Regulatory &amp; Law Enforcement Authorities:</strong> Only when mandated by Ghanaian law, court order, or an official regulatory directive.
@@ -200,7 +200,7 @@ export default function PrivacyPolicyPage() {
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-white/5 dark:bg-slate-950/40 space-y-1">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Designated Entity</span>
                 <p className="font-bold text-slate-900 dark:text-white text-sm">
-                  CapeCoast
+                  pycbundles
                 </p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">Republic of Ghana</p>
               </div>
@@ -208,8 +208,8 @@ export default function PrivacyPolicyPage() {
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-white/5 dark:bg-slate-950/40 space-y-1">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Privacy &amp; Compliance Email</span>
                 <p className="font-bold text-slate-900 dark:text-white text-sm break-all">
-                  <a href="mailto:dzrahfelix@gmail.com" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                    dzrahfelix@gmail.com
+                  <a href="mailto:spyeboah@gmail.com" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                    spyeboah@gmail.com
                   </a>
                 </p>
               </div>
@@ -217,11 +217,11 @@ export default function PrivacyPolicyPage() {
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-white/5 dark:bg-slate-950/40 space-y-1">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Customer Support Desk</span>
                 <p className="font-bold text-slate-900 dark:text-white text-sm">
-                  <a href="https://wa.me/233242319697" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                    0242319697
+                  <a href="https://wa.me/233241349656" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                    0241349656
                   </a>
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">+233 24 231 9697</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">+233 24 134 9656</p>
               </div>
             </div>
           </div>

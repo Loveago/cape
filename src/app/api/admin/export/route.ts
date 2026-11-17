@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
 
     if (type === "users") {
       columns = userColumns;
-      title = "CapeCoast — Users";
+      title = "pycbundles — Users";
       const users = await prisma.user.findMany({
         orderBy: { createdAt: "desc" },
         include: { _count: { select: { orders: true } } },
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       }));
     } else if (type === "transactions") {
       columns = txColumns;
-      title = "CapeCoast — Wallet Transactions";
+      title = "pycbundles — Wallet Transactions";
       const where: Record<string, unknown> = {};
       if (userId) where.userId = userId;
       if (status) where.status = status;
@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
       }));
     } else {
       columns = orderColumns;
-      title = "CapeCoast — Orders";
+      title = "pycbundles — Orders";
       const where: Record<string, unknown> = {};
       if (userId) where.userId = userId;
       if (status) where.status = status;

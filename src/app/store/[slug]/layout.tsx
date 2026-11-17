@@ -18,7 +18,7 @@ export async function generateMetadata({
     select: { name: true, description: true },
   });
 
-  const title = storefront?.name ? `${storefront.name} · Instant Bundles` : "CapeCoast Storefront";
+  const title = storefront?.name ? `${storefront.name} · Instant Bundles` : "pycbundles Storefront";
   const description = storefront?.description || "Instant automated telecom data bundles delivered directly to your SIM.";
 
   return {

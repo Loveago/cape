@@ -168,7 +168,7 @@ export function SendClaimCard({ onSuccess }: { onSuccess: () => void }) {
               Account Name
             </span>
             <p className="mt-1 text-sm font-black text-slate-900 dark:text-white">
-              {settings?.accountName ?? "CapeCoast"}
+              {settings?.accountName ?? "pycbundles"}
             </p>
           </div>
 
@@ -213,7 +213,7 @@ export function SendClaimCard({ onSuccess }: { onSuccess: () => void }) {
                 Payment Verified &amp; Wallet Credited
               </h4>
               <p className="text-xs text-emerald-800 dark:text-emerald-300">
-                {formatGHS(claimResult.amount)} has been added to your CapeCoast available balance.
+                {formatGHS(claimResult.amount)} has been added to your pycbundles available balance.
               </p>
             </div>
           </div>

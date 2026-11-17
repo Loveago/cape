@@ -172,7 +172,7 @@ export function StoreChrome(props: StoreChromeProps) {
                 <h3 className="text-base font-bold text-[#111318] dark:text-[#F4F4F6]">{name}</h3>
                 <span className="text-xs text-[#1D4ED8] dark:text-[#3B82F6] font-semibold flex items-center gap-1 justify-center sm:justify-start">
                   <ShieldCheck className="h-3.5 w-3.5 text-[#15803D] dark:text-[#22C55E]" />
-                  Verified CapeCoast Merchant
+                  Verified pycbundles Merchant
                 </span>
               </div>
             </div>

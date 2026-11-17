@@ -115,7 +115,7 @@ export default async function DashboardPage() {
             </span>
           </div>
           <p className="text-xs text-[#5A606B] dark:text-[#949AA6] mt-0.5">
-            Monitor bundle dispatches, wallet liquidity, and carrier throughput on CapeCoast.
+            Monitor bundle dispatches, wallet liquidity, and carrier throughput on pycbundles.
           </p>
         </div>
 
@@ -520,7 +520,7 @@ export default async function DashboardPage() {
                   Need assistance?
                 </div>
                 <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-                  Contact CapeCoast Support Desk
+                  Contact pycbundles Support Desk
                 </div>
               </div>
             </div>

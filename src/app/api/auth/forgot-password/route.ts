@@ -10,7 +10,7 @@ import { getSetting } from "@/lib/orders";
 import { sendPasswordResetEmail } from "@/lib/email";
 import { cleanDomain } from "@/lib/storefront-utils";
 
-const MAIN_DOMAIN = cleanDomain(process.env.MAIN_DOMAIN, "capecoast.gh");
+const MAIN_DOMAIN = cleanDomain(process.env.MAIN_DOMAIN, "pycbundles.com");
 
 function getCanonicalResetOrigin(request: NextRequest): string {
   if (process.env.APP_URL) {

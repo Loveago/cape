@@ -339,7 +339,7 @@ export function SystemChatWidget({ user }: { user: AuthUser }) {
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-bold leading-none truncate">
-                  {isStaff ? "Staff Support Desk" : "CapeCoast Live Support"}
+                  {isStaff ? "Staff Support Desk" : "pycbundles Live Support"}
                 </p>
                 <p className="mt-1 flex items-center gap-1.5 text-[11px] text-white/80 font-medium">
                   <span className="h-2 w-2 rounded-full bg-[#F59E0B] shrink-0" />
@@ -636,7 +636,7 @@ export function SystemChatWidget({ user }: { user: AuthUser }) {
                           <div className="rounded-xl border border-brand-500/20 bg-brand-50/60 p-3 text-xs dark:bg-brand-500/10">
                             <div className="flex items-center gap-1.5 font-bold text-brand-600 dark:text-brand-400">
                               <Sparkles className="h-3.5 w-3.5" />
-                              <span>Welcome to CapeCoast Live Help</span>
+                              <span>Welcome to pycbundles Live Help</span>
                             </div>
                             <p className="mt-1 text-[#5A606B] dark:text-[#949AA6] leading-relaxed">
                               Our support desk is here to assist with your data packages, deliveries, or billing questions.

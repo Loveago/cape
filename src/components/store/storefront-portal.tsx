@@ -358,7 +358,7 @@ export function StorefrontPortal({
     }
   };
 
-  const storeTitle = storefront.name || "CapeCoast Store";
+  const storeTitle = storefront.name || "pycbundles Store";
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0C0D10] text-[#111318] dark:text-[#F4F4F6] font-sans pb-16">

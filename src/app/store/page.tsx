@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 import { ArrowRight, Search, ShieldCheck, Store, Zap, Radio } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Storefront Directory | CapeCoast",
+  title: "Storefront Directory | pycbundles",
   description:
-    "Look up a verified CapeCoast merchant storefront to purchase instant MTN, Telecel, and AirtelTigo data bundles.",
+    "Look up a verified pycbundles merchant storefront to purchase instant MTN, Telecel, and AirtelTigo data bundles.",
   icons: {
     icon: [
       { url: "/store/icon.svg", type: "image/svg+xml" },
@@ -46,7 +46,7 @@ export default async function StorefrontIndexPage({
           </span>
           <div className="flex flex-col">
             <span className="text-sm font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
-              CapeCoast
+              pycbundles
             </span>
             <span className="text-[10px] font-medium uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6]">
               Storefront Directory
@@ -72,7 +72,7 @@ export default async function StorefrontIndexPage({
             <span>Merchant Portal Lookup</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
-            Find a CapeCoast Storefront
+            Find a pycbundles Storefront
           </h1>
           <p className="text-sm text-[#5A606B] dark:text-[#949AA6] max-w-lg leading-relaxed">
             Enter a merchant&apos;s store handle below to browse non-expiry MTN, Telecel, and AirtelTigo data bundles or track an existing order.
@@ -165,7 +165,7 @@ export default async function StorefrontIndexPage({
               Want to launch your own data storefront?
             </p>
             <p className="text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-              Create a CapeCoast merchant account and start selling in minutes.
+              Create a pycbundles merchant account and start selling in minutes.
             </p>
           </div>
           <Link
@@ -182,7 +182,7 @@ export default async function StorefrontIndexPage({
       <footer className="mx-auto w-full max-w-2xl pt-6 border-t border-[#E5E2DC] dark:border-[#262A34] text-xs text-[#5A606B] dark:text-[#949AA6]">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <span className="font-medium">
-            CapeCoast Storefronts © {new Date().getFullYear()}
+            pycbundles Storefronts © {new Date().getFullYear()}
           </span>
           <div className="flex items-center gap-3">
             <Link href="/terms" className="hover:text-[#111318] dark:hover:text-[#F4F4F6] transition-colors">

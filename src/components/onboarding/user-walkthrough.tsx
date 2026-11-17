@@ -250,13 +250,13 @@ export function UserWalkthrough({ userName }: { userName?: string }) {
 
             <div>
               <div className="inline-flex items-center gap-1.5 rounded-md bg-[#1D4ED8]/10 dark:bg-[#3B82F6]/15 px-2.5 py-1 text-xs font-semibold text-[#1D4ED8] dark:text-[#3B82F6]">
-                <Zap className="h-3.5 w-3.5" /> Welcome to CapeCoast
+                <Zap className="h-3.5 w-3.5" /> Welcome to pycbundles
               </div>
               <h2 id="tour-heading" className="mt-2.5 text-2xl font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
-                {userName ? `Welcome, ${userName}` : "Welcome to CapeCoast"}
+                {userName ? `Welcome, ${userName}` : "Welcome to pycbundles"}
               </h2>
               <p className="mt-2 text-sm text-[#5A606B] dark:text-[#949AA6] leading-relaxed">
-                CapeCoast makes it fast and reliable to dispatch bulk data bundles, top up your wallet, and track carrier deliveries in real time.
+                pycbundles makes it fast and reliable to dispatch bulk data bundles, top up your wallet, and track carrier deliveries in real time.
               </p>
             </div>
 

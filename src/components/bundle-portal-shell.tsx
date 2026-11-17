@@ -274,7 +274,7 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
             })}
           </nav>
 
-          {/* CapeCoast Support & Status Footer */}
+          {/* pycbundles Support & Status Footer */}
           <div className="mt-auto pt-3 space-y-2.5 border-t border-[#E5E2DC] dark:border-[#262A34]">
             <Link
               href="/admin/chat"
@@ -285,7 +285,7 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
                   <Headphones className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-[#111318] dark:text-[#F4F4F6]">CapeCoast Support</div>
+                  <div className="text-xs font-semibold text-[#111318] dark:text-[#F4F4F6]">pycbundles Support</div>
                   <div className="text-[10px] text-[#5A606B] dark:text-[#949AA6]">24/7 Dispatch Desk</div>
                 </div>
               </div>
@@ -398,7 +398,7 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
                   <span>Sign Out</span>
                 </button>
                 <div className="pt-2 text-center text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-                  CapeCoast Telecom Platform
+                  pycbundles Telecom Platform
                 </div>
               </div>
             </div>
@@ -424,7 +424,7 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
           <footer className="mt-10 border-t border-[#E5E2DC] dark:border-[#262A34] pt-4 text-xs text-[#5A606B] dark:text-[#949AA6] w-full max-w-7xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                <span>CapeCoast © {new Date().getFullYear()} · All Rights Reserved</span>
+                <span>pycbundles © {new Date().getFullYear()} · All Rights Reserved</span>
                 <span>·</span>
                 <Link href="/terms" target="_blank" className="hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors">
                   Terms

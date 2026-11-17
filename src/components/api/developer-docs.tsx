@@ -283,7 +283,7 @@ echo $response;`;
 
   const webhookVerifyNode = `import crypto from "crypto";
 
-function verifyCapeCoastWebhook(rawBody, signatureHeader, timestampHeader, secret) {
+function verifypycbundlesWebhook(rawBody, signatureHeader, timestampHeader, secret) {
   const payloadToSign = \`\${timestampHeader}.\${rawBody}\`;
   const expectedSignature = crypto
     .createHmac("sha256", secret)
@@ -303,7 +303,7 @@ function verifyCapeCoastWebhook(rawBody, signatureHeader, timestampHeader, secre
       <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold tracking-tight">CapeCoast Developer API Reference</h2>
+            <h2 className="text-xl font-bold tracking-tight">pycbundles Developer API Reference</h2>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Complete reference for integrating automated mobile data fulfillment into your apps.
             </p>

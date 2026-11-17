@@ -32,7 +32,7 @@ export async function buildOrdersWorkbook(
   meta: ExportWorkbookMeta
 ): Promise<Buffer> {
   const wb = new ExcelJS.Workbook();
-  wb.creator = "CapeCoast";
+  wb.creator = "pycbundles";
   wb.created = meta.exportedAt;
 
   // One sheet per network, named after the network

@@ -39,7 +39,7 @@ export function AuthShell({
     <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0C0D10] text-[#111318] dark:text-[#F4F4F6] flex flex-col selection:bg-blue-700 selection:text-white">
       {/* Main 50/50 Architectural Split */}
       <div className="flex-1 grid lg:grid-cols-2">
-        {/* Left Panel: Architectural Grid + CapeCoast Value Prop + Carrier Dispatch Health */}
+        {/* Left Panel: Architectural Grid + pycbundles Value Prop + Carrier Dispatch Health */}
         <div className="relative hidden lg:flex flex-col justify-between border-r border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC]/60 dark:bg-[#14161B]/60 p-10 xl:p-14 overflow-hidden">
           {/* Crisp geometric hairline grid */}
           <div
@@ -147,7 +147,7 @@ export function AuthShell({
 
           {/* Left Panel Bottom Note */}
           <div className="relative z-10 flex items-center justify-between text-xs text-[#5A606B] dark:text-[#949AA6]">
-            <span>CapeCoast Reseller Platform</span>
+            <span>pycbundles Reseller Platform</span>
             <span className="font-mono tabular-nums">GHS · Direct Switch</span>
           </div>
         </div>

@@ -25,12 +25,12 @@ export async function getBrevoConfig(): Promise<BrevoConfig> {
   const dbSenderEmail = (await getSetting("brevo_sender_email")).trim();
   const envSenderEmail = process.env.BREVO_SENDER_EMAIL?.trim();
   const supportEmail = (await getSetting("support_email")).trim();
-  const senderEmail = dbSenderEmail || envSenderEmail || supportEmail || "dzrahfelix@gmail.com";
+  const senderEmail = dbSenderEmail || envSenderEmail || supportEmail || "spyeboah@gmail.com";
 
   const dbSenderName = (await getSetting("brevo_sender_name")).trim();
   const envSenderName = process.env.BREVO_SENDER_NAME?.trim();
   const siteName = (await getSetting("site_name")).trim();
-  const senderName = dbSenderName || envSenderName || siteName || "CapeCoast";
+  const senderName = dbSenderName || envSenderName || siteName || "pycbundles";
 
   return { apiKey, senderEmail, senderName };
 }
@@ -126,7 +126,7 @@ export async function sendPasswordResetEmail(
   resetUrl: string,
   expiryMinutes = 60
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
-  const brandName = (await getSetting("site_name", "CapeCoast")).trim() || "CapeCoast";
+  const brandName = (await getSetting("site_name", "pycbundles")).trim() || "pycbundles";
   const subject = `Reset your ${brandName} password`;
 
   const html = `
@@ -211,7 +211,7 @@ export async function sendLoginOtpEmail(
   otpCode: string,
   expiryMinutes = 10
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
-  const brandName = (await getSetting("site_name", "CapeCoast")).trim() || "CapeCoast";
+  const brandName = (await getSetting("site_name", "pycbundles")).trim() || "pycbundles";
   const subject = `${otpCode} is your ${brandName} verification code`;
   const formattedOtp = otpCode.split("").join(" ");
 
@@ -292,53 +292,53 @@ export async function sendApiApprovalEmail(userEmail: string, userName: string, 
   const appUrl = (
     process.env.APP_URL ||
     process.env.NEXTAUTH_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://capecoast.gh")
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://pycbundles.com")
   ).replace(/\/$/, "");
 
   await sendEmail({
     to: userEmail,
-    subject: "Your CapeCoast API Access Has Been Approved!",
-    text: `Hello ${userName},\n\nCongratulations! Your developer API access application for "${businessName}" has been approved by the CapeCoast admin team.\n\nYou can now log in to your developer dashboard, generate production API credentials (ck_live_...), configure your webhooks, and start submitting live automated data orders.\n\nDashboard: ${appUrl}/dashboard/api?tab=credentials\nDocs: ${appUrl}/dashboard/api?tab=docs\n\nBest regards,\nThe CapeCoast Team`,
+    subject: "Your pycbundles API Access Has Been Approved!",
+    text: `Hello ${userName},\n\nCongratulations! Your developer API access application for "${businessName}" has been approved by the pycbundles admin team.\n\nYou can now log in to your developer dashboard, generate production API credentials (ck_live_...), configure your webhooks, and start submitting live automated data orders.\n\nDashboard: ${appUrl}/dashboard/api?tab=credentials\nDocs: ${appUrl}/dashboard/api?tab=docs\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
 export async function sendApiRejectionEmail(userEmail: string, userName: string, businessName: string, reason?: string): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: "CapeCoast API Application Update",
-    text: `Hello ${userName},\n\nThank you for your interest in the CapeCoast Developer API. After reviewing your application for "${businessName}", we are unable to approve production access at this time.\n\n${reason ? `Reason: ${reason}\n\n` : ""}You may update your business details and re-apply from your dashboard.\n\nBest regards,\nThe CapeCoast Team`,
+    subject: "pycbundles API Application Update",
+    text: `Hello ${userName},\n\nThank you for your interest in the pycbundles Developer API. After reviewing your application for "${businessName}", we are unable to approve production access at this time.\n\n${reason ? `Reason: ${reason}\n\n` : ""}You may update your business details and re-apply from your dashboard.\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
 export async function sendApiSuspensionEmail(userEmail: string, userName: string, businessName: string, reason?: string): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: "Notice: CapeCoast API Access Suspended",
-    text: `Hello ${userName},\n\nPlease be advised that API access for "${businessName}" has been temporarily suspended.\n\n${reason ? `Details: ${reason}\n\n` : ""}If you believe this was in error, please reach out to our support team.\n\nBest regards,\nThe CapeCoast Team`,
+    subject: "Notice: pycbundles API Access Suspended",
+    text: `Hello ${userName},\n\nPlease be advised that API access for "${businessName}" has been temporarily suspended.\n\n${reason ? `Details: ${reason}\n\n` : ""}If you believe this was in error, please reach out to our support team.\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
 export async function sendCredentialCreatedEmail(userEmail: string, userName: string, credentialName: string, keyPrefix: string, env: string): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: `New CapeCoast API Key Generated: ${credentialName}`,
-    text: `Hello ${userName},\n\nA new ${env} API credential "${credentialName}" (${keyPrefix}...) was generated on your account.\n\nIf you did not perform this action, please revoke the key immediately from your Developer Dashboard.\n\nBest regards,\nThe CapeCoast Team`,
+    subject: `New pycbundles API Key Generated: ${credentialName}`,
+    text: `Hello ${userName},\n\nA new ${env} API credential "${credentialName}" (${keyPrefix}...) was generated on your account.\n\nIf you did not perform this action, please revoke the key immediately from your Developer Dashboard.\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
 export async function sendCredentialRevokedEmail(userEmail: string, userName: string, credentialName: string, keyPrefix: string): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: `CapeCoast API Key Revoked: ${credentialName}`,
-    text: `Hello ${userName},\n\nThe API key "${credentialName}" (${keyPrefix}...) on your account has been revoked and can no longer make API requests.\n\nBest regards,\nThe CapeCoast Team`,
+    subject: `pycbundles API Key Revoked: ${credentialName}`,
+    text: `Hello ${userName},\n\nThe API key "${credentialName}" (${keyPrefix}...) on your account has been revoked and can no longer make API requests.\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
 export async function sendWebhookFailureEmail(userEmail: string, webhookUrl: string, errorDetail: string): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: "Alert: CapeCoast Webhook Delivery Failures",
-    text: `Hello,\n\nWe detected multiple consecutive delivery failures when dispatching order status webhooks to your endpoint:\n\n${webhookUrl}\n\nLast error: ${errorDetail}\n\nPlease check that your server is online, reachable, and responds with an HTTP 2xx status within 10 seconds.\n\nBest regards,\nThe CapeCoast Team`,
+    subject: "Alert: pycbundles Webhook Delivery Failures",
+    text: `Hello,\n\nWe detected multiple consecutive delivery failures when dispatching order status webhooks to your endpoint:\n\n${webhookUrl}\n\nLast error: ${errorDetail}\n\nPlease check that your server is online, reachable, and responds with an HTTP 2xx status within 10 seconds.\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
@@ -351,8 +351,8 @@ export async function sendClaimSuccessEmail(
 ): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: "Your CapeCoast Wallet Top-Up Was Successful",
-    text: `Hello ${userName},\n\nYour GHS ${amount.toFixed(2)} Mobile Money payment has been successfully added to your CapeCoast wallet.\n\nTransaction Reference: ${reference}\nNetwork: ${network}\n\nBest regards,\nThe CapeCoast Team`,
+    subject: "Your pycbundles Wallet Top-Up Was Successful",
+    text: `Hello ${userName},\n\nYour GHS ${amount.toFixed(2)} Mobile Money payment has been successfully added to your pycbundles wallet.\n\nTransaction Reference: ${reference}\nNetwork: ${network}\n\nBest regards,\nThe pycbundles Team`,
   });
 }
 
@@ -364,7 +364,7 @@ export async function sendClaimRejectedEmail(
 ): Promise<void> {
   await sendEmail({
     to: userEmail,
-    subject: "CapeCoast Mobile Money Claim Update",
-    text: `Hello ${userName},\n\nYour claim for Mobile Money transaction ${reference} could not be processed.\n\nReason: ${reason}\n\nIf you need assistance, please verify your transaction details or contact CapeCoast support.\n\nBest regards,\nThe CapeCoast Team`,
+    subject: "pycbundles Mobile Money Claim Update",
+    text: `Hello ${userName},\n\nYour claim for Mobile Money transaction ${reference} could not be processed.\n\nReason: ${reason}\n\nIf you need assistance, please verify your transaction details or contact pycbundles support.\n\nBest regards,\nThe pycbundles Team`,
   });
 }

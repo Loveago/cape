@@ -518,7 +518,7 @@ export function AdminShell({ user, children, allowedNavHrefs, announcement }: Ad
               <div className="flex items-center justify-between px-1 text-[10px] text-[#5A606B] dark:text-[#949AA6]">
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#15803D] dark:bg-[#22C55E]" />
-                  <span>CapeCoast Core</span>
+                  <span>pycbundles Core</span>
                 </div>
                 <span className="font-mono">v2.0</span>
               </div>
@@ -538,7 +538,7 @@ export function AdminShell({ user, children, allowedNavHrefs, announcement }: Ad
             <footer className="mt-10 border-t border-[#E5E2DC] dark:border-[#262A34] pt-4 text-xs text-[#5A606B] dark:text-[#949AA6]">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                  <span>CapeCoast Admin © {new Date().getFullYear()} · All Rights Reserved</span>
+                  <span>pycbundles Admin © {new Date().getFullYear()} · All Rights Reserved</span>
                   <span>·</span>
                   <Link href="/terms" target="_blank" className="hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors">
                     Terms
@@ -554,7 +554,7 @@ export function AdminShell({ user, children, allowedNavHrefs, announcement }: Ad
                 </div>
                 <div className="flex items-center gap-2 text-[11px]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#15803D] dark:bg-[#22C55E]" />
-                  <span>CapeCoast Operations Desk</span>
+                  <span>pycbundles Operations Desk</span>
                 </div>
               </div>
             </footer>

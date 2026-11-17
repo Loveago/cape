@@ -1382,7 +1382,7 @@ export default function AdminSettingsPage() {
                 <Input
                   value={settings.site_name ?? ""}
                   onChange={(e) => setSettings((s) => ({ ...s, site_name: e.target.value }))}
-                  placeholder="CapeCoast"
+                  placeholder="pycbundles"
                 />
               </div>
               <div className="space-y-1.5">
@@ -1421,7 +1421,7 @@ export default function AdminSettingsPage() {
                   type="email"
                   value={settings.contact_email ?? ""}
                   onChange={(e) => setSettings((s) => ({ ...s, contact_email: e.target.value }))}
-                  placeholder="dzrahfelix@gmail.com"
+                  placeholder="spyeboah@gmail.com"
                 />
               </div>
             </div>
@@ -1567,7 +1567,7 @@ export default function AdminSettingsPage() {
                     <Input
                       value={settings.brevo_sender_name ?? ""}
                       onChange={(e) => setSettings((s) => ({ ...s, brevo_sender_name: e.target.value }))}
-                      placeholder="CapeCoast"
+                      placeholder="pycbundles"
                     />
                     <p className="text-[11px] text-slate-500 dark:text-slate-400">
                       Friendly display name shown on outgoing emails.
@@ -2007,7 +2007,7 @@ export default function AdminSettingsPage() {
                 <Input
                   value={settings.support_email ?? ""}
                   onChange={(e) => setSettings((s) => ({ ...s, support_email: e.target.value }))}
-                  placeholder="dzrahfelix@gmail.com"
+                  placeholder="spyeboah@gmail.com"
                 />
               </div>
               <div className="space-y-1.5">
@@ -2015,7 +2015,7 @@ export default function AdminSettingsPage() {
                 <Input
                   value={settings.footer_text ?? ""}
                   onChange={(e) => setSettings((s) => ({ ...s, footer_text: e.target.value }))}
-                  placeholder="Powered by CapeCoast"
+                  placeholder="Powered by pycbundles"
                 />
               </div>
             </div>

@@ -9,7 +9,7 @@ export async function GET() {
     await requireUser();
 
     const wb = new ExcelJS.Workbook();
-    wb.creator = "CapeCoast";
+    wb.creator = "pycbundles";
     const ws = wb.addWorksheet("Orders");
 
     ws.columns = [{ width: 18 }, { width: 14 }];

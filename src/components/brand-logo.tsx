@@ -14,7 +14,7 @@ export interface BrandProps {
 }
 
 /**
- * CapeCoast Geometric Signal-Prism Mark
+ * pycbundles Geometric Signal-Prism Mark
  * Crisp 2-color geometric prism (Cobalt + Amber), zero glow.
  */
 export function BrandMark({
@@ -66,7 +66,7 @@ export function BrandMark({
         className
       )}
       style={{ width: px, height: px, maxWidth: "100%" }}
-      aria-label="CapeCoast"
+      aria-label="pycbundles"
     >
       <svg
         viewBox="0 0 100 100"
@@ -93,7 +93,7 @@ export function BrandMark({
 }
 
 /**
- * Full Horizontal Brand Logo (Signal-Prism Mark + "CapeCoast" + "TELECOM & DATA DISTRIBUTION")
+ * Full Horizontal Brand Logo (Signal-Prism Mark + "pycbundles" + "TELECOM & DATA DISTRIBUTION")
  */
 export function BrandLogo({
   className,

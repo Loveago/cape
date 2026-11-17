@@ -291,20 +291,20 @@ export function LegalPageShell({
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <a
-                href="mailto:dzrahfelix@gmail.com"
+                href="mailto:spyeboah@gmail.com"
                 className="inline-flex items-center gap-1.5 rounded-lg bg-[#1D4ED8] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] transition-colors"
               >
                 <Mail className="h-3.5 w-3.5" />
-                <span>dzrahfelix@gmail.com</span>
+                <span>spyeboah@gmail.com</span>
               </a>
               <a
-                href="https://wa.me/233242319697"
+                href="https://wa.me/233241349656"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-[#E5E2DC] bg-[#F3F1EC] px-3.5 py-2 text-xs font-semibold text-[#111318] hover:bg-[#E5E2DC] dark:border-[#262A34] dark:bg-[#1C1F26] dark:text-[#F4F4F6] dark:hover:bg-[#262A34] transition-colors"
               >
                 <Phone className="h-3.5 w-3.5 text-[#D97706] dark:text-[#F59E0B]" />
-                <span className="font-mono">0242319697</span>
+                <span className="font-mono">0241349656</span>
               </a>
             </div>
           </div>
@@ -321,7 +321,7 @@ export function LegalPageShell({
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="font-semibold text-[#111318] dark:text-[#F4F4F6]">
-              CapeCoast © 2026
+              pycbundles © 2026
             </span>
             <span>·</span>
             <a

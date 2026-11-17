@@ -1,12 +1,12 @@
 export const openApiSpec = {
   openapi: "3.1.0",
   info: {
-    title: "CapeCoast Developer API Platform",
+    title: "pycbundles Developer API Platform",
     version: "1.0.0",
     description:
-      "Production-ready developer API for CapeCoast. Automate Ghanaian mobile data bundles (MTN, Telecel, AirtelTigo) directly from your applications, reseller stores, websites, and platforms.",
+      "Production-ready developer API for pycbundles. Automate Ghanaian mobile data bundles (MTN, Telecel, AirtelTigo) directly from your applications, reseller stores, websites, and platforms.",
     contact: {
-      name: "CapeCoast Developer Support",
+      name: "pycbundles Developer Support",
       url: "/",
     },
   },
@@ -582,7 +582,7 @@ export const openApiSpec = {
             in: "path",
             required: true,
             schema: { type: "string" },
-            description: "The CapeCoast order ID, e.g. API-839201 or 839201",
+            description: "The pycbundles order ID, e.g. API-839201 or 839201",
           },
         ],
         responses: {
@@ -635,7 +635,7 @@ export const openApiSpec = {
     "/balance": {
       get: {
         summary: "Check Account Wallet Balance",
-        description: "Returns your current CapeCoast wallet balance in GHS.",
+        description: "Returns your current pycbundles wallet balance in GHS.",
         responses: {
           "200": {
             description: "Wallet balance amount",

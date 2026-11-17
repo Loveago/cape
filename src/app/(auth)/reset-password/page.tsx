@@ -102,7 +102,7 @@ export default function ResetPasswordPage() {
   return (
     <AuthShell
       title="Reset your password"
-      subtitle="Enter a new password for your CapeCoast account"
+      subtitle="Enter a new password for your pycbundles account"
     >
       <Suspense fallback={<Spinner className="mx-auto" />}>
         <ResetForm />

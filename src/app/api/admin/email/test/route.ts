@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       {
         to: recipient,
         toName: admin.name || "Admin",
-        subject: "CapeCoast Email Integration Test",
+        subject: "pycbundles Email Integration Test",
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; border: 1px solid #E5E2DC; border-radius: 12px; background-color: #FFFFFF;">
             <h2 style="color: #1D4ED8; margin-top: 0;">Brevo Email Integration Test</h2>
@@ -44,11 +44,11 @@ export async function POST(request: NextRequest) {
               <p style="margin: 0; font-size: 13px; color: #5A606B;">Dispatched at: <strong style="color: #111318;">${new Date().toISOString()}</strong></p>
             </div>
             <p style="color: #94a3b8; font-size: 12px; margin-bottom: 0;">
-              Sent by CapeCoast Admin Settings Test Tool
+              Sent by pycbundles Admin Settings Test Tool
             </p>
           </div>
         `,
-        text: `CapeCoast Email Integration Test\n\nCongratulations! Your Brevo transactional email configuration is working properly.\n\nRecipient: ${recipient}\nDispatched at: ${new Date().toISOString()}`,
+        text: `pycbundles Email Integration Test\n\nCongratulations! Your Brevo transactional email configuration is working properly.\n\nRecipient: ${recipient}\nDispatched at: ${new Date().toISOString()}`,
       },
       {
         apiKey: effectiveApiKey,

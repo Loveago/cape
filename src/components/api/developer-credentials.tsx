@@ -163,7 +163,7 @@ export function DeveloperCredentials({
             </div>
             <p className="text-base font-bold text-[#111318] dark:text-[#F4F4F6]">No API credentials generated yet</p>
             <p className="text-xs text-[#5A606B] dark:text-[#949AA6] max-w-sm mx-auto">
-              Create your first credential to authorize REST requests against the CapeCoast gateway.
+              Create your first credential to authorize REST requests against the pycbundles gateway.
             </p>
             <button
               onClick={() => setShowCreateModal(true)}

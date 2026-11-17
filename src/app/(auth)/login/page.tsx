@@ -105,7 +105,7 @@ export default function LoginPage() {
       title={step === "credentials" ? "Sign in to your account" : "Enter security code"}
       subtitle={
         step === "credentials"
-          ? "Access your CapeCoast reseller console and wallet"
+          ? "Access your pycbundles reseller console and wallet"
           : `Check ${otpEmail} for your 6-digit passcode`
       }
     >

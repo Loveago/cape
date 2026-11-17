@@ -450,7 +450,7 @@ export function AppShell({
           {/* Sidebar Footer Support Card */}
           <div className="pt-6 border-t border-slate-200/70 dark:border-white/5 space-y-2 text-[11px] text-slate-500 dark:text-slate-400">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-slate-700 dark:text-slate-300">CapeCoast</span>
+              <span className="font-bold text-slate-700 dark:text-slate-300">pycbundles</span>
               <span className="text-[10px] text-[#1D4ED8] dark:text-[#3B82F6] font-bold">v2.4</span>
             </div>
             {supportPhone && <p className="truncate">📞 {supportPhone}</p>}
@@ -464,7 +464,7 @@ export function AppShell({
               >
                 <span>Powered by</span>
                 <span className="font-semibold text-slate-600 dark:text-slate-300 group-hover:text-[#1D4ED8] dark:group-hover:text-[#3B82F6] underline decoration-slate-300 dark:decoration-slate-600 underline-offset-2">
-                  CapeCoast
+                  pycbundles
                 </span>
               </a>
             </div>
@@ -499,7 +499,7 @@ export function AppShell({
           <footer className="mt-12 border-t border-slate-200/70 dark:border-white/5 pt-5 text-xs text-slate-400">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                <p>{footerText || "CapeCoast © 2026 · All Rights Reserved"}</p>
+                <p>{footerText || "pycbundles © 2026 · All Rights Reserved"}</p>
                 <span>·</span>
                 <Link href="/terms" target="_blank" className="hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors">
                   Terms
@@ -521,7 +521,7 @@ export function AppShell({
               >
                 <span>Powered by</span>
                 <span className="font-bold text-slate-700 dark:text-slate-200 group-hover:text-[#1D4ED8] dark:group-hover:text-[#3B82F6] underline decoration-slate-300 dark:decoration-slate-600 underline-offset-2">
-                  CapeCoast
+                  pycbundles
                 </span>
               </a>
             </div>
@@ -619,7 +619,7 @@ export function AppShell({
                 >
                   <span>Powered by</span>
                   <span className="font-semibold text-slate-600 dark:text-slate-300 group-hover:text-[#1D4ED8] dark:group-hover:text-[#3B82F6] underline underline-offset-2">
-                    CapeCoast
+                    pycbundles
                   </span>
                 </a>
               </div>
