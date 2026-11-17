@@ -183,7 +183,14 @@ export function AuthShell({
 
           {/* Footer Bar */}
           <footer className="mt-8 pt-4 border-t border-[#E5E2DC] dark:border-[#262A34] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-            <span>CapeCoast © 2026</span>
+            <a
+              href="https://wa.me/233507904981"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors"
+            >
+              Powered by <span className="font-semibold text-[#111318] dark:text-[#F4F4F6]">Crazy Tech Enterprise</span>
+            </a>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Link href="/terms" className="hover:text-[#111318] dark:hover:text-[#F4F4F6] transition-colors">
                 Terms

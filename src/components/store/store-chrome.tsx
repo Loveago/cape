@@ -203,15 +203,17 @@ export function StoreChrome(props: StoreChromeProps) {
                 {name} © {new Date().getFullYear()} · All Rights Reserved
               </p>
               <span>·</span>
-              <Link
-                href="/store"
+              <a
+                href="https://wa.me/233507904981"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors group"
               >
                 <span>Powered by</span>
                 <span className="font-semibold text-[#111318] dark:text-[#F4F4F6] group-hover:underline">
-                  CapeCoast
+                  Crazy Tech Enterprise
                 </span>
-              </Link>
+              </a>
             </div>
             <div className="flex items-center gap-3">
               <Link

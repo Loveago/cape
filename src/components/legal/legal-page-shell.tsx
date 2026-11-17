@@ -324,7 +324,14 @@ export function LegalPageShell({
               CapeCoast © 2026
             </span>
             <span>·</span>
-            <span>All Rights Reserved</span>
+            <a
+              href="https://wa.me/233507904981"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors"
+            >
+              Powered by <span className="font-semibold text-[#111318] dark:text-[#F4F4F6]">Crazy Tech Enterprise</span>
+            </a>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs">

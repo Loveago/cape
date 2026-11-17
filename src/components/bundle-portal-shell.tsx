@@ -438,9 +438,20 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
                   Privacy
                 </Link>
               </div>
-              <div className="flex items-center gap-2 text-[11px]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#15803D] dark:bg-[#22C55E]" />
-                <span>CapeCoast Network Status: Operational</span>
+              <div className="flex flex-wrap items-center gap-3 text-[11px]">
+                <a
+                  href="https://wa.me/233507904981"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors"
+                >
+                  Powered by <span className="font-semibold text-[#111318] dark:text-[#F4F4F6]">Crazy Tech Enterprise</span>
+                </a>
+                <span>·</span>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#15803D] dark:bg-[#22C55E]" />
+                  <span>Network Status: Operational</span>
+                </div>
               </div>
             </div>
           </footer>
