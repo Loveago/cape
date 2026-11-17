@@ -157,10 +157,10 @@ export function BrandLogo({
       <div className="flex flex-col justify-center min-w-0">
         <div className="flex items-center leading-none">
           <span className={cn("font-extrabold tracking-[-0.03em]", primaryWordClass, textSize)}>
-            Cape
+            pyc
           </span>
           <span className={cn("font-extrabold tracking-[-0.03em]", accentWordClass, textSize)}>
-            Coast
+            bundles
           </span>
         </div>
         {showTagline && (
