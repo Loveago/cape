@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <rect width="128" height="128" rx="28" fill="#0C0D10" />
+  <rect x="1.5" y="1.5" width="125" height="125" rx="26.5" stroke="#262A34" stroke-width="1.75" />
+  <path
+    d="M 69 24 L 28 47.5 L 28 80.5 L 69 104 L 69 85.5 L 45 71.5 L 45 56.5 L 69 42.5 Z"
+    fill="#3B82F6"
+  />
+  <path
+    d="M 76 44 L 105 64 L 76 84 Z"
+    fill="#F59E0B"
+  />
+</svg>

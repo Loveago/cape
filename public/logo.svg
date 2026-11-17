@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500" fill="none">
+  <g transform="translate(190, 40) scale(2.2)">
+    <path d="M 54 12 L 14 35 L 14 65 L 54 88 L 54 70 L 30 56 L 30 44 L 54 30 Z" fill="#1D4ED8" />
+    <path d="M 60 32 L 88 50 L 60 68 Z" fill="#D97706" />
+  </g>
+  <g transform="translate(300, 340)">
+    <text text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.5">
+      <tspan fill="#111318">Cape</tspan><tspan fill="#1D4ED8">Coast</tspan>
+    </text>
+    <text y="50" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" letter-spacing="5" fill="#D97706">
+      TELECOM &amp; DATA DISTRIBUTION
+    </text>
+    <text y="88" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" letter-spacing="2" fill="#5A606B">
+      WARM PRECISION FINTECH
+    </text>
+  </g>
+</svg>
