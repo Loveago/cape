@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   Sparkles,
   Calendar,
+  ArrowRight,
 } from "lucide-react";
 import { buildWhatsAppLink } from "@/lib/storefront-utils";
 import type { NetworkProvider } from "@/lib/types";
@@ -77,6 +78,7 @@ function carrierMeta(network: NetworkProvider) {
         barColor: "bg-[#FFCB05]",
         dotColor: "bg-[#FFCB05]",
         badgeBg: "bg-[#FFCB05]/15 text-[#92400E] dark:text-[#FBBF24]",
+        arrowPill: "bg-[#FFCB05] text-[#111318]",
       };
     case "TELECEL":
       return {
@@ -84,6 +86,7 @@ function carrierMeta(network: NetworkProvider) {
         barColor: "bg-[#E4002B]",
         dotColor: "bg-[#E4002B]",
         badgeBg: "bg-[#E4002B]/10 text-[#B91C1C] dark:text-[#F87171]",
+        arrowPill: "bg-[#E4002B] text-white",
       };
     case "AIRTELTIGO_BIGTIME":
       return {
@@ -91,6 +94,7 @@ function carrierMeta(network: NetworkProvider) {
         barColor: "bg-[#0284C7]",
         dotColor: "bg-[#0284C7]",
         badgeBg: "bg-[#0284C7]/10 text-[#0369A1] dark:text-[#38BDF8]",
+        arrowPill: "bg-[#0284C7] text-white",
       };
     default:
       return {
@@ -98,6 +102,7 @@ function carrierMeta(network: NetworkProvider) {
         barColor: "bg-[#005FB8]",
         dotColor: "bg-[#005FB8]",
         badgeBg: "bg-[#005FB8]/10 text-[#1D4ED8] dark:text-[#60A5FA]",
+        arrowPill: "bg-[#005FB8] text-white",
       };
   }
 }
@@ -558,52 +563,47 @@ export function StorefrontPortal({
               No packages currently on sale for this network. Please select another network above.
             </div>
           ) : (
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {filteredProducts.map((pkg) => {
                 const meta = carrierMeta(pkg.network);
 
                 return (
-                  <div
+                  <button
                     key={pkg.packageId}
-                    className="flex flex-col justify-between rounded-xl bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] overflow-hidden transition-colors hover:border-[#1D4ED8]/50 dark:hover:border-[#3B82F6]/50"
+                    type="button"
+                    onClick={() => handleOpenBuy(pkg)}
+                    className="group flex flex-col justify-between rounded-xl bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] p-3.5 text-left transition-all hover:border-[#1D4ED8]/50 dark:hover:border-[#3B82F6]/60 hover:bg-[#FAF9F6] dark:hover:bg-[#1C1F26] active:scale-[0.98] cursor-pointer"
                   >
-                    {/* 3px Carrier Top Accent Bar */}
-                    <div className={`h-[3px] w-full ${meta.barColor}`} />
-
-                    <div className="p-3.5 flex-1 flex flex-col justify-between gap-3">
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between gap-1">
-                          <span className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold ${meta.badgeBg}`}>
-                            <span className={`h-1.5 w-1.5 rounded-full ${meta.dotColor}`} />
-                            {meta.label}
-                          </span>
-                          <span className="text-[10px] font-medium text-[#5A606B] dark:text-[#949AA6]">
-                            {pkg.validity || "90 days"}
-                          </span>
-                        </div>
-
-                        {/* Bold GB Size */}
-                        <div className="text-xl sm:text-2xl font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6] pt-0.5">
-                          {pkg.gbAmount}GB
-                        </div>
-                      </div>
-
-                      <div className="space-y-2.5 pt-2 border-t border-[#E5E2DC]/70 dark:border-[#262A34]">
-                        {/* Monospace Tabular GHS Price */}
-                        <div className="text-sm sm:text-base font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
-                          GH₵{pkg.price.toFixed(2)}
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => handleOpenBuy(pkg)}
-                          className="w-full py-2 text-center text-xs font-semibold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] rounded-lg transition-colors active:scale-[0.98] cursor-pointer"
-                        >
-                          Buy Now
-                        </button>
-                      </div>
+                    {/* Top Row: Validity + Status Dot */}
+                    <div className="flex items-center justify-between gap-2 w-full">
+                      <span className="text-[11px] font-medium text-[#5A606B] dark:text-[#949AA6]">
+                        {pkg.validity || "Non-Expiry"}
+                      </span>
+                      <span className="h-2 w-2 rounded-full bg-[#15803D] dark:bg-[#22C55E]" />
                     </div>
-                  </div>
+
+                    {/* Center: Bold Centered GB Size */}
+                    <div className="my-4 text-center">
+                      <span className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
+                        {pkg.gbAmount}
+                      </span>
+                      <span className="ml-0.5 text-xs sm:text-sm font-bold text-[#111318] dark:text-[#F4F4F6]">
+                        GB
+                      </span>
+                    </div>
+
+                    {/* Bottom Row: Price + Circular Arrow CTA */}
+                    <div className="flex items-center justify-between gap-2 w-full pt-2.5 border-t border-[#E5E2DC]/80 dark:border-[#262A34]">
+                      <span className="text-sm sm:text-base font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+                        ₵{pkg.price.toFixed(2)}
+                      </span>
+                      <span
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform group-hover:translate-x-0.5 ${meta.arrowPill}`}
+                      >
+                        <ArrowRight className="h-3.5 w-3.5 stroke-[2.5]" />
+                      </span>
+                    </div>
+                  </button>
                 );
               })}
             </div>
