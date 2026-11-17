@@ -83,7 +83,7 @@ export function DeveloperCredentials({
       setCreateName("");
       setNewKeyModal(json.apiKey);
       try {
-        localStorage.setItem("capecoast_playground_api_key", json.apiKey);
+        localStorage.setItem("pycbundles_playground_api_key", json.apiKey);
       } catch {}
       toast("Credential created successfully", "success");
       load();
@@ -114,7 +114,7 @@ export function DeveloperCredentials({
       if (action === "ROTATE" && json.newApiKey) {
         setNewKeyModal(json.newApiKey);
         try {
-          localStorage.setItem("capecoast_playground_api_key", json.newApiKey);
+          localStorage.setItem("pycbundles_playground_api_key", json.newApiKey);
         } catch {}
         toast("Key rotated successfully. Save your new key.", "success");
       } else {

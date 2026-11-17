@@ -48,12 +48,12 @@ async function main() {
     default_momo_number: "0240000000",
     reports_enabled: "true",
     report_not_received_window_hours: "24",
-    site_name: "CommonTech",
-    site_announcement: "⚡ Welcome to CommonTech! Instant automated telecom data dispatch across MTN, Telecel, and AirtelTigo.",
+    site_name: "pycbundles",
+    site_announcement: "⚡ Welcome to pycbundles! Instant automated telecom data dispatch across MTN, Telecel, and AirtelTigo.",
     support_whatsapp: "+233240000000",
     support_phone: "0240000000",
     support_email: "dzrahfelix@gmail.com",
-    support_telegram: "@commontech",
+    support_telegram: "@pycbundles",
   };
 
   for (const [key, value] of Object.entries(defaultSettings)) {
@@ -301,8 +301,8 @@ async function main() {
       enabled: true,
       network: "MTN",
       momoNumber: "0244001122",
-      accountName: "CommonTech HQ",
-      instructions: "Transfer to MTN MoMo 0244001122 (CommonTech HQ), then enter your 10-12 digit Transaction ID below to claim your funds instantly.",
+      accountName: "pycbundles HQ",
+      instructions: "Transfer to MTN MoMo 0244001122 (pycbundles HQ), then enter your 10-12 digit Transaction ID below to claim your funds instantly.",
       minimumAmount: 1.0,
       maximumAmount: 5000.0,
       claimExpiryHours: 168,

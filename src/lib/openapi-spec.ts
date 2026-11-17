@@ -203,7 +203,7 @@ export const openApiSpec = {
         type: "object",
         required: ["url"],
         properties: {
-          url: { type: "string", example: "https://your-domain.com/webhooks/mycedinet" },
+          url: { type: "string", example: "https://your-domain.com/webhooks/pycbundles" },
           events: {
             type: "array",
             items: { type: "string" },

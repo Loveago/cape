@@ -380,7 +380,7 @@ export function DeveloperApplicationCard({
                 </label>
                 <input
                   type="url"
-                  placeholder="https://yourwebsite.com/api/webhooks/capecoast"
+                  placeholder="https://yourwebsite.com/api/webhooks/pycbundles"
                   value={webhookUrl}
                   onChange={(e) => setWebhookUrl(e.target.value)}
                   className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500"

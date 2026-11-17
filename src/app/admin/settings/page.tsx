@@ -1999,7 +1999,7 @@ export default function AdminSettingsPage() {
                 <Input
                   value={settings.support_telegram ?? ""}
                   onChange={(e) => setSettings((s) => ({ ...s, support_telegram: e.target.value }))}
-                  placeholder="@capecoast"
+                  placeholder="@pycbundles"
                 />
               </div>
               <div className="space-y-1.5">

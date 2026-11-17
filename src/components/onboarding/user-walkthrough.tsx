@@ -116,7 +116,7 @@ const TOUR_STEPS: TourStep[] = [
   },
 ];
 
-const STORAGE_KEY = "capecoast_user_walkthrough_completed_v1";
+const STORAGE_KEY = "pycbundles_user_walkthrough_completed_v1";
 
 export function UserWalkthrough({ userName }: { userName?: string }) {
   const router = useRouter();

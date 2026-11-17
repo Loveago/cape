@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
 
     if (rows.length > 5000) rows = rows.slice(0, 5000);
     const stamp = new Date().toISOString().slice(0, 10);
-    const filename = `capecoast-${type}-${stamp}`;
+    const filename = `pycbundles-${type}-${stamp}`;
 
     if (format === "csv") return exportResponse(toCsv(rows, columns), "csv", filename);
     if (format === "pdf") return exportResponse(await toPdf(title, rows, columns), "pdf", filename);

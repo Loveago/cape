@@ -318,7 +318,7 @@ export function DeveloperPlayground({
     if (typeof window !== "undefined") {
       try {
         const stored =
-          localStorage.getItem("capecoast_playground_api_key") ||
+          localStorage.getItem("pycbundles_playground_api_key") ||
           localStorage.getItem("tsk_playground_api_key");
         if (stored) {
           setCustomKey(stored);
@@ -354,9 +354,9 @@ export function DeveloperPlayground({
     if (typeof window !== "undefined") {
       try {
         if (val.trim()) {
-          localStorage.setItem("capecoast_playground_api_key", val.trim());
+          localStorage.setItem("pycbundles_playground_api_key", val.trim());
         } else {
-          localStorage.removeItem("capecoast_playground_api_key");
+          localStorage.removeItem("pycbundles_playground_api_key");
           localStorage.removeItem("tsk_playground_api_key");
         }
       } catch {}

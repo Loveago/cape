@@ -24,7 +24,7 @@ interface Initial {
 
 export function StorefrontSettingsForm({
   initial,
-  storefrontDomain = "cmtshop.net",
+  storefrontDomain = "shop.pycbundles.com",
 }: {
   initial: Initial;
   storefrontDomain?: string;

@@ -33,7 +33,7 @@ export async function GET() {
     return new Response(new Uint8Array(bytes), {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": 'attachment; filename="capecoast-order-template.xlsx"',
+        "Content-Disposition": 'attachment; filename="pycbundles-order-template.xlsx"',
         "Cache-Control": "no-store",
       },
     });
