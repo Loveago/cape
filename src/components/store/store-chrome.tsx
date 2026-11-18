@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Signal,
   ArrowLeft,
+  Megaphone,
 } from "lucide-react";
 import { NetworkLogo } from "./network-logo";
 import { NETWORK_BRANDS, networkHref, storeHref } from "./brands";
@@ -103,27 +104,47 @@ export function StoreChrome(props: StoreChromeProps) {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0C0D10] text-[#111318] dark:text-[#F4F4F6] transition-colors pb-16 sm:pb-0 selection:bg-[#1D4ED8] selection:text-white">
-      {/* Optional Top Announcement Bar (if store owner set a custom notice) */}
+      {/* Top Announcement Bar (scrolling marquee matching main site) */}
       {promoVisible && bannerText && (
         <div
-          className="relative bg-[#111318] dark:bg-[#14161B] text-white px-4 py-1.5 text-xs font-medium border-b border-[#262A34]"
+          className="banner-container relative z-40 overflow-hidden bg-[#1D4ED8] dark:bg-[#14161B] text-white border-b border-blue-800/40 dark:border-[#262A34] select-none"
           role="region"
           aria-label="Store Announcement"
         >
-          <div className="mx-auto max-w-xl flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 overflow-hidden text-xs">
-              <span className="inline-flex items-center rounded-md bg-[#D97706]/20 border border-[#D97706]/40 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F59E0B] shrink-0">
-                Notice
+          <div className="relative flex w-full items-center py-1.5 sm:py-2 px-3 overflow-hidden">
+            {/* Left Notice Badge */}
+            <div className="hidden sm:flex items-center gap-1.5 shrink-0 pr-3 border-r border-white/20 dark:border-[#262A34] z-10 bg-[#1D4ED8] dark:bg-[#14161B] pl-1">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
               </span>
-              <p className="truncate text-[11px] sm:text-xs text-[#F4F4F6]">
-                {bannerText}
-              </p>
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-300 dark:text-[#F59E0B]">
+                <Megaphone className="h-3 w-3" />
+                <span>Notice</span>
+              </span>
             </div>
+
+            {/* Continuous sliding marquee text */}
+            <div className="flex-1 overflow-hidden relative">
+              <div className="animate-banner-slide py-0.5 text-xs sm:text-sm font-semibold tracking-wide text-white flex items-center">
+                <span className="inline-flex items-center gap-3 px-6 text-blue-50 dark:text-slate-200">
+                  <span className="text-amber-300 dark:text-[#F59E0B]">⚡</span>
+                  <span>{bannerText}</span>
+                  <span className="text-white/40 font-bold">·</span>
+                  <span className="text-amber-300 dark:text-[#F59E0B]">📢</span>
+                  <span>{bannerText}</span>
+                  <span className="text-white/40 font-bold">·</span>
+                  <span className="text-amber-300 dark:text-[#F59E0B]">⚡</span>
+                  <span>{bannerText}</span>
+                </span>
+              </div>
+            </div>
+
             <button
               type="button"
               aria-label="Dismiss banner"
               onClick={() => setPromoVisible(false)}
-              className="rounded-md p-1 text-[#949AA6] hover:text-white transition-colors cursor-pointer shrink-0"
+              className="ml-2 rounded-md p-1 text-white/75 hover:text-white transition-colors cursor-pointer shrink-0 z-10"
             >
               <X className="h-3.5 w-3.5" />
             </button>
