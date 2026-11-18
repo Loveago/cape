@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Loader2, Save, ShieldCheck, RefreshCw } from "lucide-react";
+import { Loader2, Save, ShieldCheck, RefreshCw, Copy, Download } from "lucide-react";
 import { useToast } from "@/components/toast";
 import { PageHeader } from "@/components/shared";
 import { formatGHS } from "@/lib/types";
@@ -196,14 +196,47 @@ export default function AdminAfaPage() {
               </button>
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => loadData(statusFilter)}
-            className="inline-flex items-center gap-1 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] px-2.5 py-1 text-xs font-medium text-[#5A606B] dark:text-[#949AA6] hover:text-[#111318] dark:hover:text-white"
-          >
-            <RefreshCw className="h-3.5 w-3.5" />
-            <span>Refresh</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (registrations.length === 0) return;
+                const headers = ["Full Name", "Phone", "Ghana Card", "Location", "Source", "Fee (GHS)", "Commission (GHS)", "Payment", "Status", "Created At"];
+                const rows = registrations.map((r) => [
+                  `"${r.fullName.replace(/"/g, '""')}"`,
+                  r.phone,
+                  r.ghanaCard,
+                  `"${r.location.replace(/"/g, '""')}"`,
+                  `"${(r.storefront ? `Store: ${r.storefront.name}` : r.user?.email || "Direct").replace(/"/g, '""')}"`,
+                  (r.feePesewas / 100).toFixed(2),
+                  (r.commissionPesewas / 100).toFixed(2),
+                  r.paymentStatus,
+                  r.status,
+                  r.createdAt,
+                ]);
+                const csv = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
+                const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `pycbundles-afa-registrations-${new Date().toISOString().slice(0, 10)}.csv`;
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+              className="inline-flex items-center gap-1 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] px-2.5 py-1 text-xs font-medium text-[#5A606B] dark:text-[#949AA6] hover:text-[#111318] dark:hover:text-white cursor-pointer"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>Export CSV</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => loadData(statusFilter)}
+              className="inline-flex items-center gap-1 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] px-2.5 py-1 text-xs font-medium text-[#5A606B] dark:text-[#949AA6] hover:text-[#111318] dark:hover:text-white cursor-pointer"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Refresh</span>
+            </button>
+          </div>
         </div>
 
         {loading ? (
@@ -258,17 +291,35 @@ export default function AdminAfaPage() {
                       </span>
                     </td>
                     <td className="px-4 py-2.5">
-                      <select
-                        value={r.status}
-                        disabled={updatingId === r.id}
-                        onChange={(e) => updateStatus(r.id, e.target.value)}
-                        className="h-8 rounded-md border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-2 text-xs text-[#111318] dark:text-[#F4F4F6]"
-                      >
-                        <option value="PENDING">PENDING</option>
-                        <option value="PROCESSING">PROCESSING</option>
-                        <option value="COMPLETED">COMPLETED</option>
-                        <option value="REJECTED">REJECTED</option>
-                      </select>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const text = `${r.fullName}\n${r.phone}\n${r.ghanaCard}\n${r.location}`;
+                            try {
+                              await navigator.clipboard.writeText(text);
+                              toast("Copied registration details", "success");
+                            } catch {
+                              toast("Copy failed", "error");
+                            }
+                          }}
+                          title="Copy registration details"
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] text-[#5A606B] hover:text-[#111318] dark:text-[#949AA6] dark:hover:text-white cursor-pointer"
+                        >
+                          <Copy className="h-3.5 w-3.5" />
+                        </button>
+                        <select
+                          value={r.status}
+                          disabled={updatingId === r.id}
+                          onChange={(e) => updateStatus(r.id, e.target.value)}
+                          className="h-8 rounded-md border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-2 text-xs text-[#111318] dark:text-[#F4F4F6]"
+                        >
+                          <option value="PENDING">PENDING</option>
+                          <option value="PROCESSING">PROCESSING</option>
+                          <option value="COMPLETED">COMPLETED</option>
+                          <option value="REJECTED">REJECTED</option>
+                        </select>
+                      </div>
                     </td>
                   </tr>
                 ))}
