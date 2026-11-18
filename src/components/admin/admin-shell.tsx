@@ -110,6 +110,7 @@ const NAV_GROUPS: NavGroup[] = [
       { href: "/admin/affiliates", label: "Affiliate Network", icon: Share2 },
       { href: "/admin/users/signup-codes", label: "Invitation Codes", icon: Ticket },
       { href: "/admin/storefronts", label: "Storefront Directory", icon: Store },
+      { href: "/admin/afa", label: "AFA Registrations", icon: ShieldCheck },
       { href: "/admin/chat", label: "Support Live Desk", icon: MessageSquare },
     ],
   },

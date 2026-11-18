@@ -120,8 +120,18 @@ export function AdminStorefrontPanel({
     }
   }
 
-  async function setStatus(sf: StorefrontRow, action: "SUSPEND" | "REVOKE") {
-    await call("/api/admin/storefronts", { userId: sf.userId, action }, `Storefront ${action === "SUSPEND" ? "suspended" : "revoked"}.`);
+  async function setStatus(sf: StorefrontRow, action: "SUSPEND" | "REVOKE" | "REACTIVATE") {
+    await call(
+      "/api/admin/storefronts",
+      { userId: sf.userId, action },
+      `Storefront ${
+        action === "SUSPEND"
+          ? "suspended"
+          : action === "REACTIVATE"
+          ? "re-enabled"
+          : "revoked"
+      }.`
+    );
   }
 
   async function reviewWithdrawal(id: string, action: "APPROVE" | "REJECT") {
@@ -348,9 +358,22 @@ export function AdminStorefrontPanel({
                       Suspend
                     </button>
                   ) : s.status === "SUSPENDED" ? (
-                    <button onClick={() => setStatus(s, "REVOKE")} disabled={busy} className="rounded-lg bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-500 disabled:opacity-50">
-                      Revoke
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setStatus(s, "REACTIVATE")}
+                        disabled={busy}
+                        className="rounded-lg bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-500 disabled:opacity-50"
+                      >
+                        Re-enable
+                      </button>
+                      <button
+                        onClick={() => setStatus(s, "REVOKE")}
+                        disabled={busy}
+                        className="rounded-lg bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-500 disabled:opacity-50"
+                      >
+                        Revoke
+                      </button>
+                    </div>
                   ) : (
                     <span className="text-xs text-slate-400">—</span>
                   )}

@@ -118,6 +118,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ storefront });
     }
 
+    if (input.action === "REACTIVATE") {
+      const storefront = await prisma.storefront.update({
+        where: { id: existing.id },
+        data: { status: "ENABLED" },
+      });
+      return NextResponse.json({ storefront });
+    }
+
     // REVOKE — store stays visible to its owner but the public page closes
     // and new sales stop (§6). Wallet + history are preserved.
     const storefront = await prisma.storefront.update({

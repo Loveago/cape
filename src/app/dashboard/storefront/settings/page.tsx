@@ -1,5 +1,6 @@
 import { requireUser } from "@/lib/auth";
-import { requireActiveStorefront } from "@/lib/storefront";
+import { requireActiveStorefront, fromPesewas } from "@/lib/storefront";
+import { getAfaSettings } from "@/lib/afa";
 import { StorefrontSettingsForm } from "./settings-form";
 import { StoreStatusToggle } from "@/components/storefront/store-status-toggle";
 import { cleanDomain } from "@/lib/storefront-utils";
@@ -7,7 +8,10 @@ import { Settings, ShieldCheck } from "lucide-react";
 
 export default async function StorefrontSettingsPage() {
   const user = await requireUser();
-  const storefront = await requireActiveStorefront(user.id);
+  const [storefront, afaSettings] = await Promise.all([
+    requireActiveStorefront(user.id),
+    getAfaSettings(),
+  ]);
   const storefrontDomain = cleanDomain(process.env.NEXT_PUBLIC_STOREFRONT_DOMAIN, "localhost:3000");
 
   return (
@@ -52,10 +56,17 @@ export default async function StorefrontSettingsPage() {
           whatsappLabel: storefront.whatsappLabel ?? "",
           notice: storefront.notice ?? "",
           reviewsEnabled: storefront.reviewsEnabled ?? true,
+          logoUrl: storefront.logoUrl ?? "",
+          afaEnabled: storefront.afaEnabled ?? false,
+          afaPriceGHS: storefront.afaPricePesewas
+            ? String(fromPesewas(storefront.afaPricePesewas).toFixed(2))
+            : String(afaSettings.feeGHS.toFixed(2)),
           payoutNetwork: storefront.payoutNetwork ?? "MTN",
           payoutNumber: storefront.payoutNumber ?? "",
           payoutAccountName: storefront.payoutAccountName ?? "",
         }}
+        afaBaseFeeGHS={afaSettings.feeGHS}
+        globalAfaEnabled={afaSettings.enabled}
       />
     </div>
   );

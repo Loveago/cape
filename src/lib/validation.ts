@@ -270,6 +270,8 @@ export const settingsSchema = z.object({
   mtn_number_verification_enabled: z.enum(["true", "false"]).optional(),
   mtn_verification_instructions: z.string().max(2000).optional(),
   storefront_feature_enabled: z.enum(["true", "false"]).optional(),
+  afa_enabled: z.enum(["true", "false"]).optional(),
+  afa_registration_fee: z.string().max(20).optional(),
   storefront_apply_enabled: z.enum(["true", "false"]).optional(),
   storefront_min_markup: z.string().max(20).optional(),
   storefront_max_markup: z.string().max(20).optional(),
@@ -395,6 +397,9 @@ export const storefrontSettingsSchema = z.object({
   notice: z.string().max(300).optional().or(z.literal("")),
   isActive: z.boolean().optional(),
   reviewsEnabled: z.boolean().optional(),
+  logoUrl: z.string().max(900000).optional().nullable(),
+  afaEnabled: z.boolean().optional(),
+  afaPriceGHS: z.coerce.number().min(0).max(5000).optional().nullable(),
 });
 
 export const storefrontSlugSchema = z.object({
@@ -484,7 +489,7 @@ export const storefrontWithdrawalReviewSchema = z.object({
 
 export const adminStorefrontSchema = z.object({
   userId: z.string().min(1, "Select a user"),
-  action: z.enum(["ENABLE", "SUSPEND", "REVOKE", "APPROVE", "REJECT"]),
+  action: z.enum(["ENABLE", "SUSPEND", "REVOKE", "APPROVE", "REJECT", "REACTIVATE"]),
   slug: z
     .string()
     .trim()
@@ -492,6 +497,20 @@ export const adminStorefrontSchema = z.object({
     .regex(/^[a-z0-9][a-z0-9-]{2,31}$/, "Slug must be 3-32 lowercase letters, numbers or dashes")
     .optional(),
   note: z.string().max(300).optional().or(z.literal("")),
+});
+
+export const afaRegistrationSchema = z.object({
+  fullName: z.string().trim().min(2, "Full name is required").max(120),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^0\d{9}$/, "Enter a valid 10-digit Ghanaian phone number starting with 0"),
+  ghanaCard: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .regex(/^GHA-\d{9}-\d$/, "Ghana Card must match GHA-#########-# format (e.g. GHA-123456789-0)"),
+  location: z.string().trim().min(2, "Location is required").max(120),
 });
 
 export const adminMarkupBoundsSchema = z.object({

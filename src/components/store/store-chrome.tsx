@@ -192,10 +192,11 @@ export function StoreChrome(props: StoreChromeProps) {
             </div>
           </div>
 
-          <p className="text-xs text-[#5A606B] dark:text-[#949AA6] leading-relaxed">
-            {description ||
-              "Instant automated non-expiry telecom data bundles delivered directly to your SIM. Secure Mobile Money clearing."}
-          </p>
+          {description && (
+            <p className="text-xs text-[#5A606B] dark:text-[#949AA6] leading-relaxed">
+              {description}
+            </p>
+          )}
 
           <div className="pt-4 border-t border-[#E5E2DC] dark:border-[#262A34] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#5A606B] dark:text-[#949AA6]">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">

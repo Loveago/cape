@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Globe, ExternalLink, Copy, Check, AlertTriangle, Loader2, Megaphone, Sparkles, Building2, Wallet, Star } from "lucide-react";
+import { Globe, ExternalLink, Copy, Check, AlertTriangle, Loader2, Megaphone, Sparkles, Building2, Wallet, Star, Upload, Trash2, ShieldCheck } from "lucide-react";
 import { cleanDomain, buildStorefrontUrl } from "@/lib/storefront-utils";
 
 interface Initial {
@@ -17,6 +17,9 @@ interface Initial {
   whatsappLabel: string;
   notice: string;
   reviewsEnabled: boolean;
+  logoUrl: string;
+  afaEnabled: boolean;
+  afaPriceGHS: string;
   payoutNetwork: string;
   payoutNumber: string;
   payoutAccountName: string;
@@ -25,9 +28,13 @@ interface Initial {
 export function StorefrontSettingsForm({
   initial,
   storefrontDomain = "shop.pycbundles.com",
+  afaBaseFeeGHS = 11,
+  globalAfaEnabled = true,
 }: {
   initial: Initial;
   storefrontDomain?: string;
+  afaBaseFeeGHS?: number;
+  globalAfaEnabled?: boolean;
 }) {
   const router = useRouter();
   const [form, setForm] = React.useState(initial);
@@ -135,6 +142,9 @@ export function StorefrontSettingsForm({
           whatsappLabel: form.whatsappLabel,
           notice: form.notice,
           reviewsEnabled: form.reviewsEnabled,
+          logoUrl: form.logoUrl || null,
+          afaEnabled: form.afaEnabled,
+          afaPriceGHS: form.afaPriceGHS ? parseFloat(form.afaPriceGHS) : null,
         }),
       });
       const data = await res.json();
@@ -445,6 +455,139 @@ export function StorefrontSettingsForm({
             </div>
           </div>
         </div>
+
+        {/* Storefront Logo Upload */}
+        <div className="rounded-2xl border border-slate-200 dark:border-[#162740] bg-slate-50/70 dark:bg-[#070d18] p-4.5 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-xl border border-slate-200 dark:border-[#162740] bg-blue-600 text-white flex items-center justify-center overflow-hidden shrink-0">
+                {form.logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={form.logoUrl} alt={form.name || "Store logo"} className="h-full w-full object-cover" />
+                ) : (
+                  <span className="text-xs font-bold tracking-wider">
+                    {(form.name || "ST").slice(0, 2).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
+                  Storefront Logo
+                </h3>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Displayed before your store name on your public storefront (PNG, JPG, or WebP).
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <label className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 dark:border-[#162740] bg-white dark:bg-[#0b1322] px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#141f35] cursor-pointer transition">
+                <Upload className="h-3.5 w-3.5" />
+                <span>{form.logoUrl ? "Change Logo" : "Upload Logo"}</span>
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      const img = new Image();
+                      img.onload = () => {
+                        const maxSide = 256;
+                        const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+                        const w = Math.max(1, Math.round(img.width * scale));
+                        const h = Math.max(1, Math.round(img.height * scale));
+                        const canvas = document.createElement("canvas");
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext("2d");
+                        if (ctx) {
+                          ctx.drawImage(img, 0, 0, w, h);
+                          const dataUrl = canvas.toDataURL("image/webp", 0.88);
+                          setForm((f) => ({ ...f, logoUrl: dataUrl }));
+                        }
+                      };
+                      img.src = String(reader.result || "");
+                    };
+                    reader.readAsDataURL(file);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              {form.logoUrl && (
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, logoUrl: "" }))}
+                  className="inline-flex items-center gap-1 rounded-lg border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-500/10 px-2.5 py-1.5 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span>Remove</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Storefront AFA Registration Toggle & Pricing */}
+        {globalAfaEnabled && (
+          <div className="rounded-2xl border border-slate-200 dark:border-[#162740] bg-slate-50/70 dark:bg-[#070d18] p-4.5 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className={`p-2 rounded-xl border transition-colors ${form.afaEnabled ? "border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400" : "border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500"}`}>
+                  <ShieldCheck className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
+                    AFA Registration on Storefront
+                  </h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Allow visitors on your storefront to submit AFA registrations. Base cost: GHS {afaBaseFeeGHS.toFixed(2)}.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={form.afaEnabled}
+                onClick={() => setForm((f) => ({ ...f, afaEnabled: !f.afaEnabled }))}
+                className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+                  form.afaEnabled ? "bg-blue-600" : "bg-slate-300 dark:bg-slate-700"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${
+                    form.afaEnabled ? "left-[22px]" : "left-0.5"
+                  }`}
+                />
+              </button>
+            </div>
+            {form.afaEnabled && (
+              <div className="pt-2 border-t border-slate-200 dark:border-[#162740] grid gap-3 sm:grid-cols-2 items-center">
+                <div>
+                  <label className="mb-1 block text-xs text-slate-500 dark:text-slate-400">
+                    Your Storefront AFA Price (GHS)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min={afaBaseFeeGHS}
+                    value={form.afaPriceGHS}
+                    onChange={set("afaPriceGHS")}
+                    className={inputCls}
+                  />
+                </div>
+                <div className="text-xs text-slate-500 dark:text-slate-400">
+                  Profit per registration:{" "}
+                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    GHS {Math.max(0, (parseFloat(form.afaPriceGHS || "0") || 0) - afaBaseFeeGHS).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Customer Reviews Feature Toggle */}
         <div className="rounded-2xl border border-slate-200 dark:border-[#162740] bg-slate-50/70 dark:bg-[#070d18] p-4.5 space-y-3">

@@ -42,6 +42,8 @@ interface StorefrontPortalProps {
     whatsappGroupLink?: string | null;
     logoUrl?: string | null;
     reviewsEnabled?: boolean;
+    afaEnabled?: boolean;
+    afaPriceGHS?: number;
   };
   products: StorefrontProductItem[];
   availableNetworks: NetworkProvider[];
@@ -112,9 +114,18 @@ export function StorefrontPortal({
   products,
   availableNetworks,
 }: StorefrontPortalProps) {
-  // Navigation tabs: data | track | reviews
+  // Navigation tabs: data | track | afa | reviews
   const isReviewsEnabled = storefront.reviewsEnabled ?? true;
-  const [activeTab, setActiveTab] = React.useState<"data" | "track" | "reviews">("data");
+  const isAfaEnabled = Boolean(storefront.afaEnabled);
+  const [activeTab, setActiveTab] = React.useState<"data" | "track" | "afa" | "reviews">("data");
+
+  // Storefront AFA form state
+  const [afaFullName, setAfaFullName] = React.useState("");
+  const [afaPhone, setAfaPhone] = React.useState("");
+  const [afaGhanaCard, setAfaGhanaCard] = React.useState("");
+  const [afaLocation, setAfaLocation] = React.useState("");
+  const [afaSubmitting, setAfaSubmitting] = React.useState(false);
+  const [afaError, setAfaError] = React.useState("");
 
   React.useEffect(() => {
     if (!isReviewsEnabled && activeTab === "reviews") {
@@ -399,10 +410,11 @@ export function StorefrontPortal({
                 </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-[#5A606B] dark:text-[#949AA6] max-w-md mx-auto leading-relaxed">
-                {storefront.description ||
-                  "Instant automated non-expiry data bundles across MTN, Telecel, and AirtelTigo."}
-              </p>
+              {storefront.description && (
+                <p className="text-xs sm:text-sm text-[#5A606B] dark:text-[#949AA6] max-w-md mx-auto leading-relaxed">
+                  {storefront.description}
+                </p>
+              )}
             </div>
 
             {/* Contact Action Pills */}
@@ -468,6 +480,21 @@ export function StorefrontPortal({
               <ClipboardList className={`h-3.5 w-3.5 ${activeTab === "track" ? "text-[#1D4ED8] dark:text-[#3B82F6]" : ""}`} />
               <span>Track Order</span>
             </button>
+
+            {isAfaEnabled && (
+              <button
+                type="button"
+                onClick={() => setActiveTab("afa")}
+                className={`flex-1 py-2 px-3 rounded-lg text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  activeTab === "afa"
+                    ? "bg-white dark:bg-[#14161B] text-[#111318] dark:text-[#F4F4F6] font-semibold shadow-xs border border-[#E5E2DC]/80 dark:border-[#262A34]"
+                    : "text-[#5A606B] dark:text-[#949AA6] font-medium hover:text-[#111318] dark:hover:text-[#F4F4F6]"
+                }`}
+              >
+                <ShieldCheck className={`h-3.5 w-3.5 ${activeTab === "afa" ? "text-[#1D4ED8] dark:text-[#3B82F6]" : ""}`} />
+                <span>AFA</span>
+              </button>
+            )}
 
             {isReviewsEnabled && (
               <button
@@ -784,6 +811,140 @@ export function StorefrontPortal({
                 })}
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* ── 4B. AFA REGISTRATION TAB VIEW ────────────────────────────────────── */}
+      {isAfaEnabled && activeTab === "afa" && (
+        <section className="mx-auto max-w-xl px-4 pt-5">
+          <div className="rounded-xl bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] overflow-hidden">
+            <div className="bg-[#1D4ED8] dark:bg-[#1E3A8A] px-5 py-4 text-white">
+              <h2 className="text-base font-bold">AFA Registration</h2>
+              <p className="mt-0.5 text-xs text-white/85">
+                Submit your details and pay the registration fee securely via Mobile Money.
+              </p>
+            </div>
+
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setAfaError("");
+                setAfaSubmitting(true);
+                try {
+                  const res = await fetch(`/api/store/${storefront.slug}/afa`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      fullName: afaFullName.trim(),
+                      phone: afaPhone.trim().replace(/\D/g, "").slice(0, 10),
+                      ghanaCard: afaGhanaCard.trim().toUpperCase(),
+                      location: afaLocation.trim(),
+                    }),
+                  });
+                  const data = await res.json();
+                  if (!res.ok) {
+                    setAfaError(data.error || "Unable to initialize AFA registration.");
+                    return;
+                  }
+                  if (data.authorizationUrl) {
+                    window.location.href = data.authorizationUrl;
+                  }
+                } catch {
+                  setAfaError("Network error. Please try again.");
+                } finally {
+                  setAfaSubmitting(false);
+                }
+              }}
+              className="p-5 space-y-4"
+            >
+              <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-4 py-3 flex items-center justify-between">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6]">
+                  Registration Fee
+                </span>
+                <span className="text-base font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+                  GHS {(storefront.afaPriceGHS ?? 11).toFixed(2)}
+                </span>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6]">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Kofi Mensah"
+                  value={afaFullName}
+                  onChange={(e) => setAfaFullName(e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-3 text-sm text-[#111318] dark:text-[#F4F4F6] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:outline-none"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6]">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  required
+                  placeholder="0241234567"
+                  value={afaPhone}
+                  onChange={(e) => setAfaPhone(e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-3 text-sm font-mono text-[#111318] dark:text-[#F4F4F6] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:outline-none"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6]">
+                  Ghana Card (GHA-#########-#)
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="GHA-123456789-0"
+                  value={afaGhanaCard}
+                  onChange={(e) => setAfaGhanaCard(e.target.value.toUpperCase())}
+                  className="w-full h-10 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-3 text-sm font-mono text-[#111318] dark:text-[#F4F4F6] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:outline-none"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6]">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Accra / Kumasi / Cape Coast"
+                  value={afaLocation}
+                  onChange={(e) => setAfaLocation(e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] px-3 text-sm text-[#111318] dark:text-[#F4F4F6] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:outline-none"
+                />
+              </div>
+
+              {afaError && (
+                <div className="rounded-lg border border-[#DC2626]/30 bg-[#DC2626]/10 px-3 py-2 text-xs text-[#DC2626] dark:text-[#EF4444]">
+                  {afaError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={afaSubmitting}
+                className="w-full h-11 rounded-lg bg-[#1D4ED8] hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] text-xs font-semibold text-white transition-colors disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {afaSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Initializing Payment...</span>
+                  </>
+                ) : (
+                  <span>Pay GHS {(storefront.afaPriceGHS ?? 11).toFixed(2)} &amp; Register</span>
+                )}
+              </button>
+            </form>
           </div>
         </section>
       )}

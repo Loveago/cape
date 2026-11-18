@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyWebhookSignature } from "@/lib/paystack";
 import { verifyAndSettleStorefrontOrder } from "@/lib/storefront";
+import { settleStorefrontAfaRegistration } from "@/lib/afa";
 import { getRequestOrigin } from "@/lib/api-helpers";
 import { cleanDomain } from "@/lib/storefront-utils";
 
@@ -23,6 +24,22 @@ export async function GET(request: NextRequest) {
       "";
 
     if (reference) {
+      if (reference.startsWith("AFA-")) {
+        const afaResult = await settleStorefrontAfaRegistration(reference);
+        slug = afaResult.slug ?? "";
+        outcome = afaResult.settled ? "success" : "failed";
+        const storefrontDomain = cleanDomain(process.env.STOREFRONT_DOMAIN, "mycedishop.com");
+        const isStorefrontOrigin = origin.toLowerCase().includes(storefrontDomain);
+        const afaTarget = slug
+          ? isStorefrontOrigin
+            ? `/${slug}?afa=${outcome}&reference=${encodeURIComponent(reference)}`
+            : `/store/${slug}?afa=${outcome}&reference=${encodeURIComponent(reference)}`
+          : isStorefrontOrigin
+          ? `/?afa=${outcome}`
+          : `/store?afa=${outcome}`;
+        return NextResponse.redirect(new URL(afaTarget, origin));
+      }
+
       const row = await prisma.storefrontOrder.findUnique({
         where: { paymentReference: reference },
         select: { storefront: { select: { slug: true } }, underlyingOrderId: true },
@@ -89,6 +106,10 @@ export async function POST(request: NextRequest) {
     }
 
     const reference = event.data.reference;
+    if (reference.startsWith("AFA-")) {
+      const afaResult = await settleStorefrontAfaRegistration(reference);
+      return NextResponse.json({ received: true, settled: afaResult.settled });
+    }
     const result = await verifyAndSettleStorefrontOrder(reference);
     return NextResponse.json({ received: true, settled: result.settled });
   } catch (err) {

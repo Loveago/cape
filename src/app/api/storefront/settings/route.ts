@@ -3,14 +3,18 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError } from "@/lib/api-helpers";
 import { storefrontSettingsSchema } from "@/lib/validation";
-import { requireStorefront, isValidSlug, slugify, RESERVED_SLUGS } from "@/lib/storefront";
+import { requireStorefront, isValidSlug, slugify, RESERVED_SLUGS, toPesewas } from "@/lib/storefront";
+import { getAfaSettings } from "@/lib/afa";
 
 /** Returns (and lazily fixes) the owner's storefront settings. */
 export async function GET() {
   try {
     const user = await requireUser();
-    const storefront = await requireStorefront(user.id);
-    return NextResponse.json({ storefront });
+    const [storefront, afaSettings] = await Promise.all([
+      requireStorefront(user.id),
+      getAfaSettings(),
+    ]);
+    return NextResponse.json({ storefront, afaBaseFeeGHS: afaSettings.feeGHS, globalAfaEnabled: afaSettings.enabled });
   } catch (err) {
     return handleRouteError(err);
   }
@@ -46,6 +50,38 @@ export async function PATCH(request: NextRequest) {
 
     const resolvedWhatsApp = input.supportPhone?.trim() || input.phone?.trim() || null;
 
+    let logoUrlUpdate: string | null | undefined = undefined;
+    if (input.logoUrl !== undefined) {
+      const trimmedLogo = input.logoUrl?.trim() || "";
+      if (!trimmedLogo) {
+        logoUrlUpdate = null;
+      } else if (
+        /^data:image\/(png|jpeg|jpg|webp|gif|svg\+xml);base64,/i.test(trimmedLogo) ||
+        /^https?:\/\//i.test(trimmedLogo)
+      ) {
+        logoUrlUpdate = trimmedLogo;
+      } else {
+        return NextResponse.json({ error: "Invalid logo image format" }, { status: 400 });
+      }
+    }
+
+    let afaPricePesewasUpdate: number | null | undefined = undefined;
+    if (input.afaPriceGHS !== undefined) {
+      if (input.afaPriceGHS === null) {
+        afaPricePesewasUpdate = null;
+      } else {
+        const afaSettings = await getAfaSettings();
+        const candidatePesewas = toPesewas(input.afaPriceGHS);
+        if (candidatePesewas < afaSettings.feePesewas) {
+          return NextResponse.json(
+            { error: `Storefront AFA price cannot be below base fee (GHS ${afaSettings.feeGHS.toFixed(2)})` },
+            { status: 400 }
+          );
+        }
+        afaPricePesewasUpdate = candidatePesewas;
+      }
+    }
+
     const updated = await prisma.storefront.update({
       where: { id: storefront.id },
       data: {
@@ -60,6 +96,9 @@ export async function PATCH(request: NextRequest) {
         whatsappLabel: input.whatsappLabel || null,
         notice: input.notice !== undefined ? (input.notice?.trim() || null) : undefined,
         reviewsEnabled: input.reviewsEnabled !== undefined ? input.reviewsEnabled : undefined,
+        ...(logoUrlUpdate !== undefined ? { logoUrl: logoUrlUpdate } : {}),
+        ...(input.afaEnabled !== undefined ? { afaEnabled: input.afaEnabled } : {}),
+        ...(afaPricePesewasUpdate !== undefined ? { afaPricePesewas: afaPricePesewasUpdate } : {}),
         ...(input.isActive !== undefined && storefront.status === "ENABLED"
           ? { isActive: input.isActive }
           : {}),

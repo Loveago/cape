@@ -4,6 +4,7 @@ import { Clock } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { fromPesewas, syncStorefrontProducts } from "@/lib/storefront";
 import { getOrderAvailabilityStatus } from "@/lib/orders";
+import { getAfaSettings } from "@/lib/afa";
 import { NETWORK_ORDER, storeHref } from "@/components/store/brands";
 import { buildWhatsAppLink } from "@/lib/storefront-utils";
 import { StorefrontPortal } from "@/components/store/storefront-portal";
@@ -16,15 +17,16 @@ export default async function PublicStorePage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ payment?: string; reference?: string }>;
+  searchParams: Promise<{ payment?: string; reference?: string; afa?: string }>;
 }) {
   const { slug } = await params;
-  const { payment, reference } = await searchParams;
+  const { payment, reference, afa } = await searchParams;
 
-  const [storefront, featureSetting, availability] = await Promise.all([
+  const [storefront, featureSetting, availability, afaSettings] = await Promise.all([
     prisma.storefront.findUnique({ where: { slug } }),
     prisma.systemSetting.findUnique({ where: { key: "storefront_feature_enabled" } }),
     getOrderAvailabilityStatus(),
+    getAfaSettings(),
   ]);
   if (!storefront || storefront.status !== "ENABLED") notFound();
 
@@ -147,6 +149,23 @@ export default async function PublicStorePage({
         </div>
       )}
 
+      {/* AFA Payment Feedback Banner */}
+      {afa && (
+        <div className="mx-auto max-w-xl px-4 pt-3">
+          <div
+            className={`rounded-2xl px-4 py-3 text-xs font-bold border ${
+              afa === "success"
+                ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                : "bg-rose-50 border-rose-200 text-rose-800"
+            }`}
+          >
+            {afa === "success"
+              ? `✓ AFA Registration payment verified! Your registration has been submitted for processing.${reference ? ` (Ref: ${reference})` : ""}`
+              : "AFA Registration payment could not be completed. Please contact support on WhatsApp with your reference."}
+          </div>
+        </div>
+      )}
+
       {/* ── IMMERSIVE STOREFRONT PORTAL (MATCHING SCREENSHOT) ────────────────── */}
       <StorefrontPortal
         storefront={{
@@ -159,6 +178,11 @@ export default async function PublicStorePage({
           whatsappGroupLink: storefront.whatsappGroupLink,
           logoUrl: storefront.logoUrl,
           reviewsEnabled: storefront.reviewsEnabled ?? true,
+          afaEnabled: afaSettings.enabled && storefront.afaEnabled,
+          afaPriceGHS:
+            storefront.afaPricePesewas && storefront.afaPricePesewas >= afaSettings.feePesewas
+              ? fromPesewas(storefront.afaPricePesewas)
+              : afaSettings.feeGHS,
         }}
         products={products.map((p) => ({
           packageId: p.packageId,

@@ -51,6 +51,7 @@ model User {
   sourceCommissions       AffiliateCommission[]   @relation("SourceUserCommissions")
   affiliateBalance        Float                   @default(0)
   affiliateWithdrawals    AffiliateWithdrawal[]
+  afaRegistrations        AfaRegistration[]
 
   @@index([role])
   @@index([status])
@@ -441,6 +442,8 @@ model Storefront {
   status      String   @default("NOT_ENABLED") // NOT_ENABLED | PENDING | ENABLED | SUSPENDED | REJECTED
   isActive    Boolean  @default(true) // Reseller toggle: open or temporarily pause storefront
   reviewsEnabled Boolean @default(true) // Reseller toggle: turn customer reviews tab on or off
+  afaEnabled  Boolean  @default(false) // Reseller toggle: enable AFA registration on storefront
+  afaPricePesewas Int? // Reseller storefront selling price in pesewas for AFA registration
   // Editable contact widget copy (§11): floating WhatsApp bubble + button labels
   contactText   String? // e.g. "Need help? Chat with us on WhatsApp"
   whatsappLabel String? // e.g. "Need help?" (drawer/menu button label)
@@ -452,7 +455,33 @@ model Storefront {
   products    StorefrontProduct[]
   orders      StorefrontOrder[]
   reviews     StorefrontReview[]
+  afaRegistrations AfaRegistration[]
 
+  @@index([status])
+}
+
+model AfaRegistration {
+  id                String      @id @default(cuid())
+  userId            String?
+  user              User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  storefrontId      String?
+  storefront        Storefront? @relation(fields: [storefrontId], references: [id], onDelete: SetNull)
+  fullName          String
+  phone             String
+  ghanaCard         String
+  location          String
+  feePesewas        Int
+  commissionPesewas Int         @default(0)
+  paymentMethod     String      @default("WALLET") // WALLET | PAYSTACK
+  paymentReference  String?     @unique
+  paymentStatus     String      @default("PAID") // PENDING | PAID | FAILED
+  status            String      @default("PENDING") // PENDING | PROCESSING | COMPLETED | REJECTED
+  adminNote         String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([storefrontId])
   @@index([status])
 }
 

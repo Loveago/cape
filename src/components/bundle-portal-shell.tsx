@@ -62,6 +62,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard/billing", label: "Wallet & Billing", icon: Wallet },
   { href: "/dashboard/transactions", label: "Transactions", icon: ArrowLeftRight },
   { href: "/dashboard/mtn-verification", label: "MTN Verification", icon: ShieldCheck },
+  { href: "/dashboard/afa", label: "AFA Registration", icon: ShieldCheck },
   { href: "/dashboard/api", label: "API", icon: Code2 },
   { href: "/dashboard/storefront", label: "Storefront", icon: Store },
   { href: "/dashboard/affiliate", label: "Affiliate Network", icon: Share2 },
