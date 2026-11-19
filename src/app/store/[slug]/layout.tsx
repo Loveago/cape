@@ -26,13 +26,12 @@ export async function generateMetadata({
     description,
     icons: {
       icon: [
-        { url: "/store/icon.svg", type: "image/svg+xml" },
-        { url: "/store/favicon.ico", sizes: "any" },
-        { url: "/store/icon.png", sizes: "512x512", type: "image/png" },
+        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
       ],
       apple: [
-        { url: "/store/apple-icon.svg", type: "image/svg+xml" },
-        { url: "/store/apple-icon.png", sizes: "180x180", type: "image/png" },
+        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
       ],
     },
   };

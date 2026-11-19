@@ -460,14 +460,13 @@ export function StorefrontSettingsForm({
         <div className="rounded-2xl border border-slate-200 dark:border-[#162740] bg-slate-50/70 dark:bg-[#070d18] p-4.5 space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl border border-slate-200 dark:border-[#162740] bg-blue-600 text-white flex items-center justify-center overflow-hidden shrink-0">
+              <div className="h-12 w-12 rounded-xl border border-slate-200 dark:border-[#162740] bg-slate-100 dark:bg-[#141f35] flex items-center justify-center overflow-hidden shrink-0">
                 {form.logoUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={form.logoUrl} alt={form.name || "Store logo"} className="h-full w-full object-cover" />
                 ) : (
-                  <span className="text-xs font-bold tracking-wider">
-                    {(form.name || "ST").slice(0, 2).toUpperCase()}
-                  </span>
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src="/icon.svg" alt={form.name || "Default store logo"} className="h-9 w-9 object-contain" />
                 )}
               </div>
               <div>

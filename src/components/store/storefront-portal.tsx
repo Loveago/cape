@@ -383,8 +383,8 @@ export function StorefrontPortal({
         <div className="h-[3px] w-full bg-gradient-to-r from-[#1D4ED8] via-[#3B82F6] to-[#D97706]" />
         <div className="mx-auto max-w-xl px-4 py-6">
           <div className="flex flex-col items-center text-center gap-3">
-            {/* Store Logo or Monogram */}
-            <div className="h-12 w-12 rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-[#1D4ED8] text-white flex items-center justify-center overflow-hidden shrink-0">
+            {/* Store Logo (Custom uploaded or Default Site Logo) */}
+            <div className="h-12 w-12 rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC] dark:bg-[#1C1F26] flex items-center justify-center overflow-hidden shrink-0">
               {storefront.logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -393,9 +393,12 @@ export function StorefrontPortal({
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <span className="text-sm font-bold tracking-wider">
-                  {storeTitle.slice(0, 2).toUpperCase()}
-                </span>
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="/icon.svg"
+                  alt={storeTitle}
+                  className="h-9 w-9 object-contain"
+                />
               )}
             </div>
 
