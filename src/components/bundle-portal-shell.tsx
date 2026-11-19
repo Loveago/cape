@@ -130,9 +130,9 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
       {announcement && <AnnouncementBar text={announcement} />}
 
       {/* ── 56px STICKY TOPBAR ────────────────────────────────────────────── */}
-      <header className="h-14 border-b border-[#E5E2DC] dark:border-[#262A34] bg-white/95 dark:bg-[#14161B]/95 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-3 sm:px-4 lg:px-5 w-full max-w-full">
+      <header className="h-14 border-b border-[#E5E2DC] dark:border-[#262A34] bg-white/95 dark:bg-[#14161B]/95 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between gap-2 px-2.5 sm:px-4 lg:px-5 w-full max-w-full">
         {/* Left: Mobile trigger & Brand */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 overflow-hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -141,7 +141,13 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
           >
             <Menu className="h-5 w-5" />
           </button>
-          <BrandLogo size="sm" showTagline={true} href="/dashboard" />
+          <BrandLogo
+            size="sm"
+            showTagline={true}
+            taglineClassName="hidden sm:block"
+            className="shrink min-w-0"
+            href="/dashboard"
+          />
         </div>
 
         {/* Center: ⌘K Search Bar */}
@@ -162,20 +168,20 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
         </div>
 
         {/* Right: Balance + Top Up, Notifications, Theme, User Menu */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           {/* Monospace Balance Pill + Top Up */}
           <div className="flex items-center rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC] dark:bg-[#1C1F26] overflow-hidden shrink-0">
             <Link
               href="/dashboard/billing"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] sm:text-xs font-mono font-semibold tabular-nums text-[#111318] dark:text-[#F4F4F6] hover:bg-black/5 dark:hover:bg-white/5 transition-colors whitespace-nowrap"
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 text-[11px] sm:text-xs font-mono font-semibold tabular-nums text-[#111318] dark:text-[#F4F4F6] hover:bg-black/5 dark:hover:bg-white/5 transition-colors whitespace-nowrap"
               title="Wallet Balance"
             >
-              <Wallet className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#3B82F6] shrink-0" />
+              <Wallet className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#3B82F6] shrink-0 hidden xs:inline-block sm:inline-block" />
               <span>{formatGHS(user.balance || 0)}</span>
             </Link>
             <Link
               href="/dashboard/billing"
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1D4ED8] hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] text-white text-[11px] font-semibold transition-colors whitespace-nowrap"
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 bg-[#1D4ED8] hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] text-white text-[11px] font-semibold transition-colors whitespace-nowrap"
               title="Top Up Wallet"
             >
               <Plus className="h-3 w-3 shrink-0" />
