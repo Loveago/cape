@@ -374,6 +374,14 @@ export function AdminStorefrontPanel({
                         Revoke
                       </button>
                     </div>
+                  ) : s.status === "NOT_ENABLED" || s.status === "REJECTED" ? (
+                    <button
+                      onClick={() => setStatus(s, "REACTIVATE")}
+                      disabled={busy}
+                      className="rounded-lg bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-500 disabled:opacity-50"
+                    >
+                      Re-enable
+                    </button>
                   ) : (
                     <span className="text-xs text-slate-400">—</span>
                   )}

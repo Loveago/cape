@@ -15,15 +15,29 @@ export async function generateMetadata({
   const { slug } = await params;
   const storefront = await prisma.storefront.findUnique({
     where: { slug },
-    select: { name: true, description: true },
+    select: { name: true, description: true, logoUrl: true },
   });
 
-  const title = storefront?.name ? `${storefront.name} · Instant Bundles` : "pycbundles Storefront";
-  const description = storefront?.description || "Instant automated telecom data bundles delivered directly to your SIM.";
+  const title = storefront?.name ? `${storefront.name} · Reliable Bundles` : "pycbundles Storefront";
+  const description = storefront?.description || "Reliable automated telecom data bundles delivered directly to your SIM.";
 
   return {
     title,
     description,
+    openGraph: {
+      title,
+      description,
+      images: [
+        {
+          url: storefront?.logoUrl && storefront.logoUrl.startsWith("http")
+            ? storefront.logoUrl
+            : "/icon.png",
+          width: 512,
+          height: 512,
+          alt: storefront?.name || "pycbundles Storefront",
+        },
+      ],
+    },
     icons: {
       icon: [
         { url: "/icon.svg", type: "image/svg+xml" },
