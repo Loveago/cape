@@ -65,25 +65,23 @@ export function PricingEditor({
     setPrices((prev) => {
       const next: Record<string, string> = { ...prev };
       for (const pkg of packages) {
+        if (next[pkg.id] !== undefined) continue;
         const prod = map.get(pkg.id);
-        if (prod) {
-          next[pkg.id] = prod.sellingPrice.toFixed(2);
-        } else if (!next[pkg.id]) {
-          next[pkg.id] = pkg.cost.toFixed(2);
-        }
+        next[pkg.id] = prod ? prod.sellingPrice.toFixed(2) : pkg.cost.toFixed(2);
       }
       return next;
     });
   }, [products, packages]);
 
-  // Non-blocking auto-sync on mount
-  const refreshData = React.useCallback(async () => {
+  // Non-blocking auto-sync on mount (runs once, never in a loop)
+  const refreshData = React.useCallback(async (overwritePrices = false) => {
     try {
       const res = await fetch("/api/storefront/products");
       if (!res.ok) return;
       const data = await res.json();
-      if (Array.isArray(data.packages)) {
-        setPackageList(data.packages);
+      const pkgs: Pkg[] = Array.isArray(data.packages) ? data.packages : [];
+      if (pkgs.length > 0) {
+        setPackageList(pkgs);
       }
       if (Array.isArray(data.products)) {
         const prods: Prod[] = data.products.map((p: any) => ({
@@ -92,17 +90,13 @@ export function PricingEditor({
           isActive: p.isActive,
         }));
         setProductList(prods);
-        const pkgs = (data.packages as Pkg[]) || packageList;
         const pMap = new Map(prods.map((p) => [p.packageId, p]));
         setPrices((prev) => {
           const next: Record<string, string> = { ...prev };
           for (const pkg of pkgs) {
+            if (!overwritePrices && next[pkg.id] !== undefined) continue;
             const match = pMap.get(pkg.id);
-            if (match) {
-              next[pkg.id] = match.sellingPrice.toFixed(2);
-            } else if (!next[pkg.id]) {
-              next[pkg.id] = pkg.cost.toFixed(2);
-            }
+            next[pkg.id] = match ? match.sellingPrice.toFixed(2) : pkg.cost.toFixed(2);
           }
           return next;
         });
@@ -110,10 +104,10 @@ export function PricingEditor({
     } catch {
       // non-blocking
     }
-  }, [packageList]);
+  }, []);
 
   React.useEffect(() => {
-    refreshData();
+    refreshData(false);
   }, [refreshData]);
 
   const visible = React.useMemo(() => {
@@ -145,7 +139,7 @@ export function PricingEditor({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to sync storefront prices");
       setMsg({ kind: "ok", text: data.message || "Storefront package prices synced with your pricing profile!" });
-      await refreshData();
+      await refreshData(true);
       router.refresh();
     } catch (e) {
       setMsg({ kind: "err", text: e instanceof Error ? e.message : "Failed to sync storefront prices" });
@@ -240,7 +234,7 @@ export function PricingEditor({
       if (!res.ok) throw new Error(data.error ?? "Bulk calibration failed");
       setMsg({ kind: "ok", text: `Updated ${data.updated} product packages across storefront` });
       setSelected(new Set());
-      await refreshData();
+      await refreshData(true);
       router.refresh();
     } catch (e) {
       setMsg({ kind: "err", text: e instanceof Error ? e.message : "Bulk calibration failed" });
