@@ -8,6 +8,7 @@ import {
   PAYSTACK_CURRENCY,
 } from "@/lib/paystack";
 import { isStorefrontReference, verifyAndSettleStorefrontOrder } from "@/lib/storefront";
+import { settleStorefrontAfaRegistration } from "@/lib/afa";
 
 /**
  * Paystack webhook (charge.success). Authenticated by the HMAC-SHA512
@@ -36,6 +37,18 @@ export async function POST(request: NextRequest) {
 
   const reference = event.data.reference;
   try {
+    // Storefront AFA registration check
+    if (reference.startsWith("AFA-")) {
+      const afaResult = await settleStorefrontAfaRegistration(reference);
+      await recordAudit({
+        actorLabel: "paystack-webhook",
+        action: "storefront.afa_settled",
+        target: `afa-registration:${reference}`,
+        newValue: JSON.stringify({ reference, settled: afaResult.settled }),
+      });
+      return NextResponse.json({ received: true, settled: afaResult.settled });
+    }
+
     // Storefront checkouts use the STF- or GH- prefix (or exist in StorefrontOrder table) — settle via the storefront
     // path (idempotent, auto-verifies, and automatically dispatches to provider).
     let isStorefront = isStorefrontReference(reference);
