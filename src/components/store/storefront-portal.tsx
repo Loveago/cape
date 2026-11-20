@@ -667,7 +667,7 @@ export function StorefrontPortal({
                 Track Order Status
               </h2>
               <p className="text-xs text-[#5A606B] dark:text-[#949AA6]">
-                Enter your recipient phone number or order reference to check live delivery telemetry.
+                Enter your phone number, email address, or order reference to check live delivery status.
               </p>
             </div>
 
@@ -676,7 +676,7 @@ export function StorefrontPortal({
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#5A606B] dark:text-[#949AA6]" />
                 <input
                   type="text"
-                  placeholder="e.g. 0244123456 or reference code"
+                  placeholder="e.g. 0244123456, email@gmail.com, or reference"
                   value={trackQuery}
                   onChange={(e) => setTrackQuery(e.target.value)}
                   className="w-full rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#FAF9F6] dark:bg-[#0C0D10] pl-9 pr-3 py-2 text-xs font-mono text-[#111318] dark:text-[#F4F4F6] placeholder:font-sans placeholder:text-[#5A606B]/60 dark:placeholder:text-[#949AA6]/60 focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:outline-none transition-colors"
@@ -782,7 +782,7 @@ export function StorefrontPortal({
                     >
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-mono font-bold text-[#111318] dark:text-[#F4F4F6]">
-                          {ord.package?.name || `${ord.network} ${ord.gbAmount}GB`}
+                          {ord.package?.name || `${ord.network} ${ord.size || `${ord.gbAmount ?? ""}GB`}`}
                         </span>
                         <span
                           className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${
@@ -798,18 +798,23 @@ export function StorefrontPortal({
                       </div>
 
                       <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6] font-mono tabular-nums flex items-center justify-between">
-                        <span>Recipient: {ord.phoneNumber}</span>
+                        <span>Recipient: {ord.phone || ord.phoneNumber || "—"}</span>
                         <span className="font-semibold text-[#111318] dark:text-[#F4F4F6]">
-                          GH₵{ord.price?.toFixed(2) || "—"}
+                          GH₵{(ord.amount ?? ord.price) != null ? Number(ord.amount ?? ord.price).toFixed(2) : "—"}
                         </span>
                       </div>
 
-                      <div className="text-[10px] text-[#5A606B] dark:text-[#949AA6] font-mono tabular-nums">
-                        Placed on {new Date(ord.createdAt).toLocaleDateString()} at{" "}
-                        {new Date(ord.createdAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                      <div className="text-[10px] text-[#5A606B] dark:text-[#949AA6] font-mono tabular-nums flex flex-wrap items-center justify-between gap-1">
+                        <span>
+                          Placed on {new Date(ord.createdAt).toLocaleDateString()} at{" "}
+                          {new Date(ord.createdAt).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                        {(ord.code || ord.reference) && (
+                          <span>Ref: {ord.code || ord.reference}</span>
+                        )}
                       </div>
 
                       {/* Not Received Help Button */}

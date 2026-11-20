@@ -32,7 +32,7 @@ async function handleTracking(
 
     const q = (input.query || "").trim();
     if (!q) {
-      return apiError(400, "Please enter a phone number or order reference to track.");
+      return apiError(400, "Please enter a phone number, email address, or order reference to track.");
     }
 
     const digits = q.replace(/\D/g, "");
@@ -88,7 +88,7 @@ async function handleTracking(
     } else if (q.includes("@")) {
       where = {
         storefrontId: storefront.id,
-        customerEmail: { equals: q.trim().toLowerCase() },
+        customerEmail: { equals: q.trim(), mode: "insensitive" },
         ...(dateFilter ? { createdAt: dateFilter } : {}),
       };
     } else {
@@ -96,9 +96,9 @@ async function handleTracking(
         storefrontId: storefront.id,
         ...(dateFilter ? { createdAt: dateFilter } : {}),
         OR: [
-          { paymentReference: { contains: q.toUpperCase() } },
+          { paymentReference: { contains: q.toUpperCase(), mode: "insensitive" } },
           { paymentReference: q },
-          { customerEmail: { contains: q } },
+          { customerEmail: { contains: q, mode: "insensitive" } },
         ],
       };
     }
