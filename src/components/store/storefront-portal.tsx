@@ -224,7 +224,7 @@ export function StorefrontPortal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           packageId: selectedProduct.packageId,
-          phoneNumber: cleanPhone,
+          customerPhone: cleanPhone,
           customerEmail: email.trim() || undefined,
         }),
       });

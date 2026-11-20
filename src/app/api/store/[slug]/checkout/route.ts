@@ -107,6 +107,7 @@ export async function POST(
 
     const seq = await prisma.$transaction(async (tx) => nextStorefrontSeq(tx, "storefrontOrder"));
     const paymentReference = generateStorefrontOrderCode();
+    const resolvedCustomerEmail = input.customerEmail?.trim() || `${input.customerPhone}@pycbundles.com`;
 
     const row = await prisma.storefrontOrder.create({
       data: {
@@ -114,7 +115,7 @@ export async function POST(
         storefrontId: storefront.id,
         productId: product.id,
         customerPhone: input.customerPhone,
-        customerEmail: input.customerEmail,
+        customerEmail: resolvedCustomerEmail,
         sellingPrice,
         productCost,
         commission,
@@ -131,7 +132,7 @@ export async function POST(
       const origin = getRequestOrigin(request);
 
       const authorization = await initializeTransaction({
-        email: input.customerEmail,
+        email: resolvedCustomerEmail,
         amountPesewas: totalPesewas,
         reference: paymentReference,
         callbackUrl: `${origin}/api/store/paystack/callback`,
