@@ -146,6 +146,23 @@ export function StorefrontPortal({
   const [checkingOut, setCheckingOut] = React.useState(false);
   const [checkoutError, setCheckoutError] = React.useState("");
 
+  React.useEffect(() => {
+    try {
+      const savedPhone = localStorage.getItem("storefront_customer_phone");
+      const savedEmail = localStorage.getItem("storefront_customer_email");
+      if (savedPhone) {
+        setPhone((prev) => prev || savedPhone);
+        setAfaPhone((prev) => prev || savedPhone);
+        setTrackQuery((prev) => prev || savedPhone);
+      }
+      if (savedEmail) {
+        setEmail((prev) => prev || savedEmail);
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
+
   // Tracking query & date filter state
   const [trackQuery, setTrackQuery] = React.useState("");
   const [trackDate, setTrackDate] = React.useState<string>("");
