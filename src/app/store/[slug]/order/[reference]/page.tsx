@@ -178,155 +178,102 @@ export default async function OrderReferencePage({
   const isFailed = effectiveStatus === "FAILED" || effectiveStatus === "CANCELLED";
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-8 sm:py-12">
-      {/* Back link */}
-      <div className="mb-6 flex items-center justify-between font-mono text-xs">
-        <Link
-          href={storeHref(slug)}
-          className="inline-flex items-center gap-1.5 font-semibold text-[#5A606B] dark:text-[#949AA6] hover:text-[#1D4ED8] dark:hover:text-[#3B82F6] transition-colors"
-        >
-          <ArrowLeft className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#3B82F6]" />
-          Back to {order.storefront.name}
-        </Link>
-        <span className="inline-flex items-center gap-1.5 rounded-md border border-[#1D4ED8]/25 dark:border-[#3B82F6]/30 bg-[#1D4ED8]/10 dark:bg-[#3B82F6]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[#1D4ED8] dark:text-[#60A5FA]">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          Telecom Switch Active
-        </span>
+    <div className="mx-auto max-w-md px-4 py-6 sm:py-10 space-y-4">
+      {/* Compact Status Banner */}
+      <div className={`rounded-xl border px-4 py-3 flex items-start gap-2.5 text-xs ${cfg.cardCls}`}>
+        <StatusIcon className={`h-4 w-4 shrink-0 mt-0.5 ${cfg.iconCls}`} />
+        <div className="min-w-0">
+          <span className="font-bold">{cfg.label}.</span>{" "}
+          <span className="opacity-90">{cfg.message}</span>
+        </div>
       </div>
 
-      {/* Main Elevated Receipt Container */}
-      <div className="relative overflow-hidden rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] shadow-sm">
-        {/* Hero Status Banner */}
-        <div className={`border-b border-[#E5E2DC] dark:border-[#262A34] p-6 sm:p-8 ${cfg.cardCls}`}>
-          <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34]">
-              <StatusIcon className={`h-6 w-6 ${cfg.iconCls}`} />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <span className={`inline-flex items-center gap-1 rounded-md border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>
-                  {cfg.label}
-                </span>
-              </div>
-              <p className="mt-2 text-xs sm:text-sm font-medium leading-relaxed opacity-90">
-                {cfg.message}
-              </p>
-            </div>
+      {/* Order Details Receipt Card */}
+      <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-5 sm:p-6 space-y-5 shadow-xs">
+        <h1 className="text-lg font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
+          Order Details
+        </h1>
+
+        <div className="space-y-3 text-xs sm:text-sm">
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Store</span>
+            <span className="font-semibold text-[#111318] dark:text-[#F4F4F6] text-right">
+              {order.storefront.name}
+            </span>
           </div>
 
-          {/* Visual 3-Stage Progress Timeline */}
-          <div className="mt-6 pt-5 border-t border-current/15">
-            <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-semibold font-mono">
-              {/* Step 1: Payment */}
-              <div className="flex flex-col items-center gap-1.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
-                </span>
-                <span className="text-[#111318] dark:text-[#F4F4F6]">1. MoMo Cleared</span>
-              </div>
-
-              {/* Step 2: Gateway */}
-              <div className="flex flex-col items-center gap-1.5">
-                <span
-                  className={`flex h-6 w-6 items-center justify-center rounded-full ${
-                    isDelivered
-                      ? "bg-emerald-600 text-white"
-                      : isFailed
-                      ? "bg-rose-600 text-white"
-                      : "bg-[#1D4ED8] dark:bg-[#3B82F6] text-white animate-pulse"
-                  }`}
-                >
-                  <Radio className="h-3 w-3" />
-                </span>
-                <span className="text-[#111318] dark:text-[#F4F4F6]">2. USSD Routing</span>
-              </div>
-
-              {/* Step 3: Credited */}
-              <div className="flex flex-col items-center gap-1.5">
-                <span
-                  className={`flex h-6 w-6 items-center justify-center rounded-full ${
-                    isDelivered
-                      ? "bg-emerald-600 text-white"
-                      : "bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] text-[#5A606B] dark:text-[#949AA6]"
-                  }`}
-                >
-                  <Smartphone className="h-3 w-3" />
-                </span>
-                <span className="text-[#111318] dark:text-[#F4F4F6]">3. SIM Credited</span>
-              </div>
-            </div>
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Network</span>
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
+                network === "MTN"
+                  ? "bg-[#FFCB05]/20 text-[#92400E] dark:text-[#FBBF24] border border-[#FFCB05]/40"
+                  : network === "TELECEL"
+                  ? "bg-[#E4002B]/15 text-[#B91C1C] dark:text-[#F87171] border border-[#E4002B]/30"
+                  : "bg-[#0284C7]/15 text-[#0369A1] dark:text-[#38BDF8] border border-[#0284C7]/30"
+              }`}
+            >
+              {brand.label}
+            </span>
           </div>
-        </div>
 
-        {/* Order Details Body */}
-        <div className="p-6 sm:p-8 space-y-6">
-          <div className="flex items-center justify-between border-b border-[#E5E2DC] dark:border-[#262A34] pb-4">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6] font-mono">
-                Dispatched Package
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Bundle</span>
+            <span className="font-bold text-[#111318] dark:text-[#F4F4F6]">
+              {gbAmount} GB
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Recipient number</span>
+            <span className="font-mono tabular-nums font-semibold text-[#111318] dark:text-[#F4F4F6]">
+              {order.customerPhone}
+            </span>
+          </div>
+
+          {order.customerEmail && !order.customerEmail.endsWith("@pycbundles.com") && (
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#5A606B] dark:text-[#949AA6] shrink-0">Receipt email</span>
+              <span className="font-mono text-xs text-[#111318] dark:text-[#F4F4F6] truncate">
+                {order.customerEmail}
               </span>
-              <div className="mt-1 flex items-center gap-2.5">
-                <div className={`h-9 w-9 rounded-lg flex items-center justify-center p-1.5 border border-[#E5E2DC] dark:border-[#262A34] ${brand.tile}`}>
-                  <NetworkLogo network={network} className="h-full w-full object-contain" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold tracking-tight text-[#111318] dark:text-[#F4F4F6]">
-                    {gbAmount} GB {brand.label}
-                  </h2>
-                  <span className="text-[11px] font-mono text-[#1D4ED8] dark:text-[#60A5FA]">
-                    Non-Expiry Telecom Data
-                  </span>
-                </div>
-              </div>
+            </div>
+          )}
+
+          <div className="border-t border-[#E5E2DC] dark:border-[#262A34] pt-3 space-y-2.5">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#5A606B] dark:text-[#949AA6]">Bundle price</span>
+              <span className="font-mono tabular-nums font-semibold text-[#111318] dark:text-[#F4F4F6]">
+                ₵{amountGhs.toFixed(2)}
+              </span>
             </div>
 
-            <div className="text-right">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#5A606B] dark:text-[#949AA6] font-mono">
-                Amount Paid
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#5A606B] dark:text-[#949AA6]">Paystack fee (2%)</span>
+              <span className="font-mono tabular-nums font-semibold text-[#D97706] dark:text-[#F59E0B]">
+                +₵{paystackFee.toFixed(2)}
               </span>
-              <p className="mt-0.5 text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+            </div>
+
+            <div className="flex items-center justify-between gap-4 font-bold text-[#111318] dark:text-[#F4F4F6]">
+              <span>Total paid</span>
+              <span className="font-mono tabular-nums text-base">
                 ₵{totalPaid.toFixed(2)}
-              </p>
-              <span className="text-[10px] text-[#5A606B] dark:text-[#949AA6] font-mono block">incl. 2% MoMo fee</span>
+              </span>
             </div>
           </div>
 
-          {/* Breakdown Rows */}
-          <div className="space-y-3 text-xs">
-            <div className="flex items-center justify-between rounded-lg bg-[#FAF9F6] dark:bg-[#0C0D10] p-3 border border-[#E5E2DC] dark:border-[#262A34]">
-              <span className="font-semibold text-[#5A606B] dark:text-[#949AA6]">Recipient Phone Line</span>
-              <span className="font-mono tabular-nums text-sm font-bold text-[#111318] dark:text-[#F4F4F6] tracking-wide">
-                {order.customerPhone}
-              </span>
-            </div>
-
-            {order.customerEmail && (
-              <div className="flex items-center justify-between px-3">
-                <span className="text-[#5A606B] dark:text-[#949AA6]">Receipt Email</span>
-                <span className="font-mono text-[#111318] dark:text-[#F4F4F6]">{order.customerEmail}</span>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between px-3">
-              <span className="text-[#5A606B] dark:text-[#949AA6]">Bundle Price</span>
-              <span className="font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">₵{amountGhs.toFixed(2)}</span>
-            </div>
-
-            <div className="flex items-center justify-between px-3">
-              <span className="text-[#5A606B] dark:text-[#949AA6]">Paystack MoMo Processing Fee</span>
-              <span className="font-mono tabular-nums text-[#D97706] dark:text-[#F59E0B]">+₵{paystackFee.toFixed(2)}</span>
-            </div>
-
-            <div className="flex items-center justify-between rounded-lg bg-[#FAF9F6] dark:bg-[#0C0D10] p-3 border border-[#E5E2DC] dark:border-[#262A34]">
-              <span className="font-semibold text-[#5A606B] dark:text-[#949AA6]">Payment Reference</span>
-              <span className="font-mono text-[11px] font-bold text-[#111318] dark:text-[#F4F4F6] select-all">
+          <div className="border-t border-[#E5E2DC] dark:border-[#262A34] pt-3 space-y-2.5">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#5A606B] dark:text-[#949AA6]">Reference</span>
+              <span className="font-mono text-xs font-semibold text-[#111318] dark:text-[#F4F4F6] select-all">
                 {reference}
               </span>
             </div>
 
-            <div className="flex items-center justify-between px-3">
-              <span className="text-[#5A606B] dark:text-[#949AA6]">Order Placed</span>
-              <span className="font-mono text-[#5A606B] dark:text-[#949AA6]">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#5A606B] dark:text-[#949AA6]">Date</span>
+              <span className="font-mono text-xs text-[#5A606B] dark:text-[#949AA6]">
                 {new Date(order.createdAt).toLocaleString("en-GH", {
                   dateStyle: "medium",
                   timeStyle: "short",
@@ -334,49 +281,49 @@ export default async function OrderReferencePage({
               </span>
             </div>
           </div>
-
-          {/* Action Button Row */}
-          <div className="flex flex-col gap-2.5 sm:flex-row pt-2">
-            <Link
-              href={storeHref(slug, "track")}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC] dark:bg-[#1C1F26] py-3 text-xs font-semibold text-[#111318] dark:text-[#F4F4F6] transition-colors hover:bg-[#E5E2DC]/60 dark:hover:bg-[#262A34] cursor-pointer"
-            >
-              <Search className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#3B82F6]" />
-              <span>Track SIM Status</span>
-            </Link>
-            <Link
-              href={storeHref(slug)}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#1D4ED8] hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] py-3 text-xs font-semibold text-white transition-colors cursor-pointer"
-            >
-              <Zap className="h-3.5 w-3.5" />
-              <span>Buy Another Bundle</span>
-            </Link>
-          </div>
-
-          {/* WhatsApp Support Link if store has WhatsApp or phone */}
-          {(() => {
-            const waNumber = order.storefront.whatsapp || order.storefront.phone;
-            const waLink = buildWhatsAppLink(
-              waNumber,
-              `Hello, I have a question about order ${reference} for ${order.customerPhone}`
-            );
-            if (!waLink) return null;
-            return (
-              <div className="text-center pt-1">
-                <a
-                  href={waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1D4ED8] dark:text-[#60A5FA] hover:underline"
-                >
-                  <span>Need help? Chat with {order.storefront.name} on WhatsApp</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </div>
-            );
-          })()}
         </div>
       </div>
+
+      {/* Stacked Action Buttons */}
+      <div className="space-y-2.5">
+        <Link
+          href={storeHref(slug, "track")}
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] hover:bg-[#F3F1EC] dark:hover:bg-[#1C1F26] text-xs font-semibold text-[#111318] dark:text-[#F4F4F6] transition-colors"
+        >
+          <Search className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#3B82F6]" />
+          <span>Track Order</span>
+        </Link>
+
+        <Link
+          href={storeHref(slug)}
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#1D4ED8] hover:bg-[#1E40AF] dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] text-xs font-semibold text-white transition-colors"
+        >
+          <span>Buy Another Bundle</span>
+        </Link>
+      </div>
+
+      {/* WhatsApp Support Link */}
+      {(() => {
+        const waNumber = order.storefront.whatsapp || order.storefront.phone;
+        const waLink = buildWhatsAppLink(
+          waNumber,
+          `Hello, I have a question about order ${reference} for ${order.customerPhone}`
+        );
+        if (!waLink) return null;
+        return (
+          <div className="text-center pt-1">
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1D4ED8] dark:text-[#60A5FA] hover:underline"
+            >
+              <span>Need help? Chat with {order.storefront.name} on WhatsApp</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </div>
+        );
+      })()}
     </div>
   );
 }
