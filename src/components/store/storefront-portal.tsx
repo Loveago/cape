@@ -1102,44 +1102,20 @@ export function StorefrontPortal({
                 </button>
               </div>
 
-              {/* Selected Bundle Summary + Fee Breakdown */}
-              {(() => {
-                const sellingPesewas = Math.round(selectedProduct.price * 100);
-                const feePesewas = Math.round(sellingPesewas * 0.02);
-                const totalPesewas = sellingPesewas + feePesewas;
-                return (
-                  <div className="rounded-xl bg-[#FAF9F6] dark:bg-[#0C0D10] p-3.5 border border-[#E5E2DC] dark:border-[#262A34] space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-base font-bold text-[#111318] dark:text-[#F4F4F6] leading-tight">
-                          {selectedProduct.gbAmount}GB Data Plan
-                        </div>
-                        <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6] font-medium mt-0.5">
-                          {selectedProduct.validity || "90 Days Validity · Non-Expiry"}
-                        </div>
-                      </div>
-                      <span className="text-sm font-semibold text-[#111318] dark:text-[#F4F4F6] font-mono tabular-nums">
-                        GH₵{selectedProduct.price.toFixed(2)}
-                      </span>
-                    </div>
-
-                    <div className="pt-2 border-t border-[#E5E2DC] dark:border-[#262A34] space-y-1 text-xs">
-                      <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-                        <span>Processing Fee (2%)</span>
-                        <span className="font-mono tabular-nums">
-                          GH₵{(feePesewas / 100).toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-[#111318] dark:text-[#F4F4F6] pt-0.5">
-                        <span>Total Payable</span>
-                        <span className="text-base text-[#1D4ED8] dark:text-[#3B82F6] font-mono tabular-nums">
-                          GH₵{(totalPesewas / 100).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
+              {/* Selected Bundle Summary */}
+              <div className="rounded-xl bg-[#FAF9F6] dark:bg-[#0C0D10] p-3.5 border border-[#E5E2DC] dark:border-[#262A34] flex items-center justify-between">
+                <div>
+                  <div className="text-base font-bold text-[#111318] dark:text-[#F4F4F6] leading-tight">
+                    {selectedProduct.gbAmount}GB Data Plan
                   </div>
-                );
-              })()}
+                  <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6] font-medium mt-0.5">
+                    {selectedProduct.validity || "90 Days Validity · Non-Expiry"}
+                  </div>
+                </div>
+                <span className="text-base font-bold text-[#111318] dark:text-[#F4F4F6] font-mono tabular-nums">
+                  GH₵{selectedProduct.price.toFixed(2)}
+                </span>
+              </div>
 
               {/* Checkout Form */}
               <form onSubmit={handleProceedCheckout} className="space-y-3.5">
@@ -1191,6 +1167,35 @@ export function StorefrontPortal({
                     <span>{checkoutError}</span>
                   </div>
                 )}
+
+                {/* Fee Calculation Breakdown (below inputs) */}
+                {(() => {
+                  const sellingPesewas = Math.round(selectedProduct.price * 100);
+                  const feePesewas = Math.round(sellingPesewas * 0.02);
+                  const totalPesewas = sellingPesewas + feePesewas;
+                  return (
+                    <div className="rounded-xl bg-[#FAF9F6] dark:bg-[#0C0D10] p-3 border border-[#E5E2DC] dark:border-[#262A34] space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
+                        <span>Bundle Price</span>
+                        <span className="font-mono tabular-nums">
+                          GH₵{selectedProduct.price.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
+                        <span>Processing Fee (2%)</span>
+                        <span className="font-mono tabular-nums">
+                          GH₵{(feePesewas / 100).toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-[#111318] dark:text-[#F4F4F6] pt-1.5 border-t border-[#E5E2DC] dark:border-[#262A34]">
+                        <span>Total Payable</span>
+                        <span className="text-sm text-[#1D4ED8] dark:text-[#3B82F6] font-mono tabular-nums">
+                          GH₵{(totalPesewas / 100).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* Pay Button */}
                 <button
