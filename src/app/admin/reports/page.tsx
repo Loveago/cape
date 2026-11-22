@@ -544,8 +544,8 @@ export default function AdminReportsPage() {
               hint="Delivered volume in range"
             />
             <StatCard
-              title="Success Rate"
-              value={`${safeData.successRate}%`}
+              title="Total GB Sold"
+              value={`${safeData.totalGb.toLocaleString()} GB`}
               icon={FileBarChart}
               hint={`${(safeData.successfulOrders ?? 0).toLocaleString()} of ${safeData.totalOrders.toLocaleString()} completed`}
             />

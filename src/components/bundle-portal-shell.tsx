@@ -32,6 +32,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { useTheme } from "next-themes";
 import { NotificationCenter } from "@/components/notifications/notification-center";
 import { AnnouncementBar } from "@/components/announcement-bar";
+import { PopupAnnouncementModal, type PopupAnnouncementData } from "@/components/popup-announcement-modal";
 import { SystemChatWidget } from "@/components/chat/system-chat-widget";
 import { cn } from "@/lib/utils";
 import { formatGHS } from "@/lib/types";
@@ -42,6 +43,7 @@ interface BundlePortalShellProps {
   children: React.ReactNode;
   announcement?: string | null;
   offlineNotice?: string | null;
+  popupAnnouncement?: PopupAnnouncementData | null;
 }
 
 interface NavItem {
@@ -78,7 +80,7 @@ const BOTTOM_NAV_ITEMS = [
   { href: "/dashboard/billing", label: "Wallet", icon: Wallet },
 ];
 
-export function BundlePortalShell({ user, announcement, offlineNotice, children }: BundlePortalShellProps) {
+export function BundlePortalShell({ user, announcement, offlineNotice, popupAnnouncement, children }: BundlePortalShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -128,6 +130,7 @@ export function BundlePortalShell({ user, announcement, offlineNotice, children 
     <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0C0D10] text-[#111318] dark:text-[#F4F4F6] flex flex-col font-sans transition-colors duration-200 antialiased selection:bg-[#1D4ED8] selection:text-white">
       {/* ── GLOBAL ANNOUNCEMENT BAR ───────────────────────────────────────── */}
       {announcement && <AnnouncementBar text={announcement} />}
+      <PopupAnnouncementModal announcement={popupAnnouncement} />
 
       {/* ── 56px STICKY TOPBAR ────────────────────────────────────────────── */}
       <header className="h-14 border-b border-[#E5E2DC] dark:border-[#262A34] bg-white/95 dark:bg-[#14161B]/95 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between gap-2 px-2.5 sm:px-4 lg:px-5 w-full max-w-full">

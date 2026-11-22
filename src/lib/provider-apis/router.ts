@@ -315,8 +315,8 @@ export async function dispatchOrder(
         durationMs,
       });
 
-      const targetStatus: "PENDING" | "PROCESSING" | "SUCCESS" | "FAILED" | "CANCELLED" =
-        ["SUCCESS", "FAILED", "CANCELLED"].includes(mappedStatus)
+      const targetStatus: "PENDING" | "PROCESSING" | "SUCCESS" | "FAILED" | "CANCELLED" | "REFUNDED" =
+        ["SUCCESS", "FAILED", "CANCELLED", "REFUNDED"].includes(mappedStatus)
           ? mappedStatus
           : "PROCESSING";
 
@@ -498,7 +498,7 @@ export async function syncTskconnectOrder(
       durationMs,
     });
 
-    if (mapped !== order.status && ["SUCCESS", "FAILED", "PROCESSING", "CANCELLED"].includes(mapped)) {
+    if (mapped !== order.status && ["SUCCESS", "FAILED", "PROCESSING", "CANCELLED", "REFUNDED"].includes(mapped)) {
       const reason =
         mapped === "FAILED"
           ? orderData?.failureReason || `Order failed upstream on Tskconnect (${rawStatus})`

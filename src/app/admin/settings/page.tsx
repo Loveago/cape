@@ -976,6 +976,101 @@ export default function AdminSettingsPage() {
         {/* Category: Announcement Banner */}
         {activeCat === "announcements" && (
           <div className="space-y-4">
+            {/* Pop-up Announcement Modal (View-Once / Max-Views) */}
+            <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 space-y-4">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    Pop-up Announcement Modal (View-Once / Max-Views)
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    Show an announcement pop-up dialog on user dashboards with a configurable max-views limit (set Max Views to 1 for view-once).
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={settings.popup_announcement_enabled === "true"}
+                  onClick={() =>
+                    setSettings((s) => ({
+                      ...s,
+                      popup_announcement_enabled: s.popup_announcement_enabled === "true" ? "false" : "true",
+                      popup_announcement_id: s.popup_announcement_id || String(Date.now()),
+                      popup_announcement_updated_at: new Date().toISOString(),
+                    }))
+                  }
+                  className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+                    settings.popup_announcement_enabled === "true" ? "bg-blue-600" : "bg-slate-300 dark:bg-slate-700"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${
+                      settings.popup_announcement_enabled === "true" ? "left-[22px]" : "left-0.5"
+                    }`}
+                  />
+                </button>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="sm:col-span-2 space-y-1.5">
+                  <Label>Pop-up Title</Label>
+                  <Input
+                    value={settings.popup_announcement_title ?? ""}
+                    onChange={(e) =>
+                      setSettings((s) => ({ ...s, popup_announcement_title: e.target.value }))
+                    }
+                    placeholder="Delivery update"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Max Views (1 = View Once)</Label>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="99"
+                    value={settings.popup_announcement_max_views ?? "1"}
+                    onChange={(e) =>
+                      setSettings((s) => ({ ...s, popup_announcement_max_views: e.target.value }))
+                    }
+                    placeholder="1"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label>Pop-up Message</Label>
+                <Textarea
+                  rows={3}
+                  value={settings.popup_announcement_message ?? ""}
+                  onChange={(e) =>
+                    setSettings((s) => ({ ...s, popup_announcement_message: e.target.value }))
+                  }
+                  placeholder="Delivery is currently on fire! Keep your orders coming."
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Click &quot;Publish as New&quot; when editing so users who dismissed an older message see the new one.
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSettings((s) => ({
+                      ...s,
+                      popup_announcement_id: String(Date.now()),
+                      popup_announcement_updated_at: new Date().toISOString(),
+                    }));
+                    toast("Pop-up version bumped — click Save Settings to publish to all users", "success");
+                  }}
+                  className="text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
+                >
+                  Publish as New (Reset User Views)
+                </button>
+              </div>
+            </div>
+
             {/* Live Preview Card */}
             <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 space-y-3">
               <div className="flex items-center justify-between">

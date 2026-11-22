@@ -103,10 +103,13 @@ export function generateTskconnectReference(orderId: number | string): string {
  */
 export function mapTskconnectStatus(
   rawStatus?: string | null
-): "PENDING" | "PROCESSING" | "SUCCESS" | "FAILED" | "CANCELLED" {
+): "PENDING" | "PROCESSING" | "SUCCESS" | "FAILED" | "CANCELLED" | "REFUNDED" {
   const s = (rawStatus || "").trim().toLowerCase();
   if (["completed", "delivered", "sent", "processed", "success", "order.completed"].includes(s)) {
     return "SUCCESS";
+  }
+  if (["refunded", "refund", "reversed", "order.refunded"].includes(s)) {
+    return "REFUNDED";
   }
   if (["failed", "rejected", "error", "unsuccessful", "order.failed"].includes(s)) {
     return "FAILED";

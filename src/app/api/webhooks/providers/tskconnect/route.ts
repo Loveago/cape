@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
 
     let updatedCount = 0;
     for (const ord of orders) {
-      if (ord.status !== targetStatus && ["SUCCESS", "FAILED", "PROCESSING", "CANCELLED"].includes(targetStatus)) {
+      if (ord.status !== targetStatus && ["SUCCESS", "FAILED", "PROCESSING", "CANCELLED", "REFUNDED"].includes(targetStatus)) {
         const reason =
           targetStatus === "FAILED"
             ? failureReason || `Tskconnect marked order as failed (${rawStatus})`

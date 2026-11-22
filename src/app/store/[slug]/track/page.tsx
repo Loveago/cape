@@ -63,15 +63,15 @@ export default async function TrackPage({ params }: { params: Promise<{ slug: st
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC] dark:bg-[#1C1F26] p-3.5">
             <span className="font-bold text-[#D97706] dark:text-[#F59E0B] block mb-1">MTN Ghana</span>
-            <span className="text-[#5A606B] dark:text-[#949AA6]">Dial <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*138#</code> to inspect bundle balance.</span>
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Dial <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*124#</code> to inspect bundle balance.</span>
           </div>
           <div className="rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC] dark:bg-[#1C1F26] p-3.5">
             <span className="font-bold text-rose-600 dark:text-rose-400 block mb-1">Telecel Ghana</span>
-            <span className="text-[#5A606B] dark:text-[#949AA6]">Dial <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*110#</code> or check the Telecel Play app.</span>
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Dial <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*126#</code> or check the Telecel Play app.</span>
           </div>
           <div className="rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-[#F3F1EC] dark:bg-[#1C1F26] p-3.5">
             <span className="font-bold text-[#1D4ED8] dark:text-[#60A5FA] block mb-1">AT Ghana</span>
-            <span className="text-[#5A606B] dark:text-[#949AA6]">Dial <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*124#</code> or <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*125#</code>.</span>
+            <span className="text-[#5A606B] dark:text-[#949AA6]">Dial <code className="font-mono font-semibold text-[#111318] dark:text-[#F4F4F6] bg-white dark:bg-[#14161B] border border-[#E5E2DC] dark:border-[#262A34] px-1.5 py-0.5 rounded">*504#</code> to inspect bundle balance.</span>
           </div>
         </div>
       </div>
