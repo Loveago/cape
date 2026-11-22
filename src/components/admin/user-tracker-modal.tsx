@@ -373,7 +373,7 @@ export function UserTrackerModal({ userId, onClose }: UserTrackerModalProps) {
                   {data.salesStats.totalGb.toFixed(1)} GB
                 </div>
                 <div className="text-[10px] text-slate-500 font-mono">
-                  Success rate: {data.salesStats.successRate}%
+                  Total data volume
                 </div>
               </div>
 

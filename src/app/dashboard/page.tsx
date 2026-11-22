@@ -154,14 +154,14 @@ export default async function DashboardPage() {
 
         <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Success Rate</span>
+            <span className="text-[11px] font-medium uppercase tracking-wider">Delivered Orders</span>
             <CheckCircle2 className="h-4 w-4 text-[#15803D] dark:text-[#22C55E]" />
           </div>
           <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
-            {successRate}%
+            {completedOrders.toLocaleString()}
           </div>
           <div className="text-[11px] text-[#15803D] dark:text-[#22C55E] font-medium">
-            {completedOrders.toLocaleString()} delivered
+            Completed dispatches
           </div>
         </div>
 

@@ -274,10 +274,14 @@ export default async function OrderReferencePage({
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#5A606B] dark:text-[#949AA6]">Date</span>
               <span className="font-mono text-xs text-[#5A606B] dark:text-[#949AA6]">
-                {new Date(order.createdAt).toLocaleString("en-GH", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
+                {(() => {
+                  const d = new Date(order.createdAt);
+                  const dd = String(d.getDate()).padStart(2, "0");
+                  const mm = String(d.getMonth() + 1).padStart(2, "0");
+                  const yyyy = d.getFullYear();
+                  const time = d.toLocaleTimeString("en-GH", { hour: "2-digit", minute: "2-digit" });
+                  return `${dd}-${mm}-${yyyy}, ${time}`;
+                })()}
               </span>
             </div>
           </div>

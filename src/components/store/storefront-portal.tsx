@@ -806,7 +806,15 @@ export function StorefrontPortal({
 
                       <div className="text-[10px] text-[#5A606B] dark:text-[#949AA6] font-mono tabular-nums flex flex-wrap items-center justify-between gap-1">
                         <span>
-                          Placed on {new Date(ord.createdAt).toLocaleDateString()} at{" "}
+                          Placed on{" "}
+                          {(() => {
+                            const d = new Date(ord.createdAt);
+                            const dd = String(d.getDate()).padStart(2, "0");
+                            const mm = String(d.getMonth() + 1).padStart(2, "0");
+                            const yyyy = d.getFullYear();
+                            return `${dd}-${mm}-${yyyy}`;
+                          })()}{" "}
+                          at{" "}
                           {new Date(ord.createdAt).toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",

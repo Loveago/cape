@@ -919,16 +919,16 @@ export function UserSalesSheet({
                 </p>
               </div>
 
-              {/* Success Rate */}
+              {/* Average Order Value */}
               <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-white/10 dark:bg-slate-900">
                 <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide block">
-                  Success Rate
+                  Avg Order Value
                 </span>
                 <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
-                  {data.summary.successRate}%
+                  {formatGHS(data.summary.averageOrderValue)}
                 </p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 truncate">
-                  AOV: {formatGHS(data.summary.averageOrderValue)}
+                  {data.summary.totalOrdersCount.toLocaleString()} total orders
                 </p>
               </div>
             </div>

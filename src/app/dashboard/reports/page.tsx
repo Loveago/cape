@@ -468,7 +468,7 @@ export default function ReportsPage() {
                 <p className="font-mono text-2xl sm:text-3xl font-bold text-[#15803D] dark:text-[#22C55E] tabular-nums tracking-tight">
                   {success.toLocaleString()}
                 </p>
-                <p className="mt-1 text-[11px] font-medium text-[#15803D]/80 dark:text-[#22C55E]/80">{successRate}% fulfillment success rate</p>
+                <p className="mt-1 text-[11px] font-medium text-[#15803D]/80 dark:text-[#22C55E]/80">Completed bundle deliveries</p>
               </div>
             </div>
 

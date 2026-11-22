@@ -386,8 +386,10 @@ export default function OrdersPage() {
             <p className="text-xl font-black text-slate-900 dark:text-white font-mono">{metrics.totalGb} GB</p>
           </div>
           <div className="space-y-0.5">
-            <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">Success Rate</p>
-            <p className="text-xl font-bold text-[#15803D] dark:text-[#22C55E] font-mono tabular-nums">{metrics.successRate}%</p>
+            <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">Avg Order Value</p>
+            <p className="text-xl font-bold text-[#15803D] dark:text-[#22C55E] font-mono tabular-nums">
+              {formatGHS(metrics.totalCount > 0 ? metrics.totalAmount / metrics.totalCount : 0)}
+            </p>
           </div>
           <div className="space-y-0.5">
             <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Value</p>
