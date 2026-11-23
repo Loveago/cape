@@ -11,12 +11,11 @@ import {
   Plus,
   ChevronRight,
   Headphones,
-  Users,
   Wallet,
   CheckCircle2,
-  TrendingUp,
   ArrowUpRight,
   Clock,
+  RotateCcw,
 } from "lucide-react";
 import { DashboardSalesChart } from "@/components/dashboard/dashboard-sales-chart";
 
@@ -56,18 +55,14 @@ export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-  const startOfToday = new Date();
-  startOfToday.setHours(0, 0, 0, 0);
-
   const orderScope =
     user.role === "ADMIN" || user.role === "MANAGER" ? {} : { userId: user.id };
 
   const [
     totalOrders,
     completedOrders,
-    todaySpendAgg,
-    activeCustomers,
+    processingOrders,
+    refundedOrders,
     userBalance,
     recentOrders,
     popularPackages,
@@ -76,12 +71,11 @@ export default async function DashboardPage() {
     prisma.order.count({
       where: { ...orderScope, status: { in: ["SUCCESS", "COMPLETED"] } },
     }),
-    prisma.order.aggregate({
-      where: { ...orderScope, createdAt: { gte: startOfToday } },
-      _sum: { amount: true },
+    prisma.order.count({
+      where: { ...orderScope, status: "PROCESSING" },
     }),
-    prisma.user.count({
-      where: { lastLoginAt: { gte: since } },
+    prisma.order.count({
+      where: { ...orderScope, status: "REFUNDED" },
     }),
     user.balance,
     prisma.order.findMany({
@@ -95,10 +89,6 @@ export default async function DashboardPage() {
       take: 4,
     }),
   ]);
-
-  const successRate =
-    totalOrders > 0 ? Math.round((completedOrders / totalOrders) * 1000) / 10 : 100;
-  const todaySpend = todaySpendAgg._sum.amount ?? 0;
 
   return (
     <div className="space-y-5">
@@ -167,27 +157,27 @@ export default async function DashboardPage() {
 
         <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Today&apos;s Spend</span>
-            <TrendingUp className="h-4 w-4 text-[#D97706] dark:text-[#F59E0B]" />
+            <span className="text-[11px] font-medium uppercase tracking-wider">Processing</span>
+            <Clock className="h-4 w-4 text-[#D97706] dark:text-[#F59E0B]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6] truncate">
-            {formatGHS(todaySpend)}
+          <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+            {processingOrders.toLocaleString()}
           </div>
-          <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-            Since 00:00 GMT
+          <div className="text-[11px] text-[#B45309] dark:text-[#F59E0B] font-medium">
+            In-flight dispatches
           </div>
         </div>
 
         <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Active Customers</span>
-            <Users className="h-4 w-4 text-[#1D4ED8] dark:text-[#3B82F6]" />
+            <span className="text-[11px] font-medium uppercase tracking-wider">Refunded</span>
+            <RotateCcw className="h-4 w-4 text-[#DC2626] dark:text-[#EF4444]" />
           </div>
           <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
-            {activeCustomers.toLocaleString()}
+            {refundedOrders.toLocaleString()}
           </div>
-          <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-            Active in last 7 days
+          <div className="text-[11px] text-[#DC2626] dark:text-[#EF4444] font-medium">
+            Credited back to wallet
           </div>
         </div>
       </div>
