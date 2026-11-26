@@ -300,7 +300,7 @@ export default function DashboardAfaPage() {
                         className={`inline-flex rounded-md px-2 py-0.5 text-[10px] font-semibold ${
                           r.status === "COMPLETED"
                             ? "bg-[#15803D]/10 text-[#15803D] dark:text-[#22C55E]"
-                            : r.status === "REJECTED"
+                            : ["FAILED", "CANCELLED", "REFUNDED", "REJECTED"].includes(r.status)
                             ? "bg-[#DC2626]/10 text-[#DC2626] dark:text-[#EF4444]"
                             : "bg-[#D97706]/10 text-[#D97706] dark:text-[#F59E0B]"
                         }`}

@@ -178,7 +178,7 @@ export default function AdminAfaPage() {
       <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] overflow-hidden">
         <div className="px-4 py-3 border-b border-[#E5E2DC] dark:border-[#262A34] flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
-            {["ALL", "PENDING", "PROCESSING", "COMPLETED", "REJECTED"].map((st) => (
+            {["ALL", "PENDING", "PROCESSING", "COMPLETED", "FAILED", "CANCELLED", "REFUNDED"].map((st) => (
               <button
                 key={st}
                 type="button"
@@ -282,7 +282,7 @@ export default function AdminAfaPage() {
                         className={`inline-flex rounded-md px-2 py-0.5 text-[10px] font-semibold ${
                           r.status === "COMPLETED"
                             ? "bg-[#15803D]/10 text-[#15803D] dark:text-[#22C55E]"
-                            : r.status === "REJECTED"
+                            : ["FAILED", "CANCELLED", "REFUNDED", "REJECTED"].includes(r.status)
                             ? "bg-[#DC2626]/10 text-[#DC2626] dark:text-[#EF4444]"
                             : "bg-[#D97706]/10 text-[#D97706] dark:text-[#F59E0B]"
                         }`}
@@ -317,7 +317,9 @@ export default function AdminAfaPage() {
                           <option value="PENDING">PENDING</option>
                           <option value="PROCESSING">PROCESSING</option>
                           <option value="COMPLETED">COMPLETED</option>
-                          <option value="REJECTED">REJECTED</option>
+                          <option value="FAILED">FAILED</option>
+                          <option value="CANCELLED">CANCELLED</option>
+                          <option value="REFUNDED">REFUNDED</option>
                         </select>
                       </div>
                     </td>

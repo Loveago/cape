@@ -7,7 +7,7 @@ import { getAfaSettings } from "@/lib/afa";
 
 const updateAfaSchema = z.object({
   id: z.string().min(1),
-  status: z.enum(["PENDING", "PROCESSING", "COMPLETED", "REJECTED"]),
+  status: z.enum(["PENDING", "PROCESSING", "COMPLETED", "FAILED", "CANCELLED", "REFUNDED"]),
   adminNote: z.string().max(300).optional().nullable(),
 });
 
@@ -46,12 +46,46 @@ export async function PATCH(request: NextRequest) {
     const existing = await prisma.afaRegistration.findUnique({ where: { id: input.id } });
     if (!existing) return apiError(404, "AFA registration not found");
 
-    const updated = await prisma.afaRegistration.update({
-      where: { id: input.id },
-      data: {
-        status: input.status,
-        adminNote: input.adminNote !== undefined ? input.adminNote?.trim() || null : undefined,
-      },
+    const updated = await prisma.$transaction(async (tx) => {
+      const shouldRefundWallet =
+        input.status === "REFUNDED" &&
+        existing.status !== "REFUNDED" &&
+        existing.paymentStatus === "PAID" &&
+        existing.paymentMethod === "WALLET" &&
+        existing.feePesewas > 0 &&
+        Boolean(existing.userId);
+
+      if (shouldRefundWallet && existing.userId) {
+        const feeGHS = existing.feePesewas / 100;
+        const refundRef = `REFUND-${existing.paymentReference || existing.id}`;
+
+        await tx.user.update({
+          where: { id: existing.userId },
+          data: { balance: { increment: feeGHS } },
+        });
+        await tx.walletTransaction.create({
+          data: {
+            userId: existing.userId,
+            type: "REFUND",
+            amount: feeGHS,
+            status: "APPROVED",
+            reference: refundRef,
+            note: `Refund for AFA Registration: ${existing.fullName} (${existing.phone})`,
+          },
+        });
+      }
+
+      return tx.afaRegistration.update({
+        where: { id: input.id },
+        data: {
+          status: input.status,
+          paymentStatus:
+            input.status === "REFUNDED" && existing.paymentStatus === "PAID"
+              ? "REFUNDED"
+              : undefined,
+          adminNote: input.adminNote !== undefined ? input.adminNote?.trim() || null : undefined,
+        },
+      });
     });
 
     return NextResponse.json({ registration: updated });
