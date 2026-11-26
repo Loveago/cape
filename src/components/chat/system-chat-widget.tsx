@@ -303,11 +303,7 @@ export function SystemChatWidget({ user }: { user: AuthUser }) {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label="Open support chat"
-        className={`fixed ${
-          isStaff
-            ? "bottom-5 right-5"
-            : "bottom-20 lg:bottom-6 right-4 lg:right-6"
-        } z-40 flex h-13 w-13 items-center justify-center rounded-full bg-[#1D4ED8] text-white shadow-lg transition-all duration-200 hover:bg-[#1E40AF] hover:scale-105 active:scale-95 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] cursor-pointer`}
+        className="fixed bottom-24 lg:bottom-6 right-4 lg:right-6 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-[#1D4ED8] text-white shadow-lg transition-all duration-200 hover:bg-[#1E40AF] hover:scale-105 active:scale-95 dark:bg-[#3B82F6] dark:hover:bg-[#2563EB] cursor-pointer"
       >
         <div className="relative flex items-center justify-center">
           <MessageSquare className="h-6 w-6" />

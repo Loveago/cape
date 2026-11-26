@@ -16,6 +16,10 @@ import {
   ArrowUpRight,
   Clock,
   RotateCcw,
+  XCircle,
+  Ban,
+  Hourglass,
+  TrendingUp,
 } from "lucide-react";
 import { DashboardSalesChart } from "@/components/dashboard/dashboard-sales-chart";
 
@@ -59,23 +63,16 @@ export default async function DashboardPage() {
     user.role === "ADMIN" || user.role === "MANAGER" ? {} : { userId: user.id };
 
   const [
-    totalOrders,
-    completedOrders,
-    processingOrders,
-    refundedOrders,
+    statusGroups,
     userBalance,
     recentOrders,
     popularPackages,
   ] = await Promise.all([
-    prisma.order.count({ where: orderScope }),
-    prisma.order.count({
-      where: { ...orderScope, status: { in: ["SUCCESS", "COMPLETED"] } },
-    }),
-    prisma.order.count({
-      where: { ...orderScope, status: "PROCESSING" },
-    }),
-    prisma.order.count({
-      where: { ...orderScope, status: "REFUNDED" },
+    prisma.order.groupBy({
+      by: ["status"],
+      where: orderScope,
+      _count: { _all: true },
+      _sum: { amount: true },
     }),
     user.balance,
     prisma.order.findMany({
@@ -89,6 +86,24 @@ export default async function DashboardPage() {
       take: 4,
     }),
   ]);
+
+  const counts: Record<string, number> = {};
+  const sums: Record<string, number> = {};
+  let totalOrders = 0;
+  for (const g of statusGroups) {
+    const c = g._count._all;
+    counts[g.status] = c;
+    sums[g.status] = Number(g._sum.amount || 0);
+    totalOrders += c;
+  }
+
+  const totalSales = (sums["SUCCESS"] ?? 0) + (sums["COMPLETED"] ?? 0);
+  const completedOrders = (counts["SUCCESS"] ?? 0) + (counts["COMPLETED"] ?? 0);
+  const processingOrders = counts["PROCESSING"] ?? 0;
+  const failedOrders = counts["FAILED"] ?? 0;
+  const refundedOrders = counts["REFUNDED"] ?? 0;
+  const pendingOrders = counts["PENDING"] ?? 0;
+  const cancelledOrders = counts["CANCELLED"] ?? 0;
 
   return (
     <div className="space-y-5">
@@ -109,7 +124,7 @@ export default async function DashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           <Link
             href="/dashboard/send"
             className="inline-flex items-center gap-1.5 rounded-lg border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] hover:bg-[#F3F1EC] dark:hover:bg-[#1C1F26] px-3 py-2 text-xs font-semibold text-[#111318] dark:text-[#F4F4F6] transition-colors"
@@ -124,60 +139,95 @@ export default async function DashboardPage() {
             <Zap className="h-3.5 w-3.5" />
             <span>Buy Bundle</span>
           </Link>
+          <Link
+            href="/dashboard/afa"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#F59E0B]/40 bg-[#F59E0B]/10 hover:bg-[#F59E0B]/20 px-3 py-2 text-xs font-semibold text-[#B45309] dark:text-[#F59E0B] transition-colors"
+          >
+            <ShieldCheck className="h-3.5 w-3.5" />
+            <span>MTN AFA</span>
+          </Link>
         </div>
       </div>
 
-      {/* ── FINTECH KPI STRIP (4 METRICS) ─────────────────────────────────── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
+      {/* ── FINTECH KPI STRIP (8 COMPACT METRICS) ─────────────────────────── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Total Orders</span>
-            <ShoppingCart className="h-4 w-4 text-[#1D4ED8] dark:text-[#3B82F6]" />
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Total Sales</span>
+            <TrendingUp className="h-3.5 w-3.5 text-[#15803D] dark:text-[#22C55E]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6] truncate">
+            {formatGHS(totalSales)}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
+          <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Total Orders</span>
+            <ShoppingCart className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#3B82F6]" />
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
             {totalOrders.toLocaleString()}
           </div>
-          <div className="text-[11px] text-[#5A606B] dark:text-[#949AA6]">
-            All-time dispatched bundles
-          </div>
         </div>
 
-        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Delivered Orders</span>
-            <CheckCircle2 className="h-4 w-4 text-[#15803D] dark:text-[#22C55E]" />
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Delivered</span>
+            <CheckCircle2 className="h-3.5 w-3.5 text-[#15803D] dark:text-[#22C55E]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#15803D] dark:text-[#22C55E]">
             {completedOrders.toLocaleString()}
           </div>
-          <div className="text-[11px] text-[#15803D] dark:text-[#22C55E] font-medium">
-            Completed dispatches
-          </div>
         </div>
 
-        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Processing</span>
-            <Clock className="h-4 w-4 text-[#D97706] dark:text-[#F59E0B]" />
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Processing</span>
+            <Clock className="h-3.5 w-3.5 text-[#D97706] dark:text-[#F59E0B]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#B45309] dark:text-[#F59E0B]">
             {processingOrders.toLocaleString()}
           </div>
-          <div className="text-[11px] text-[#B45309] dark:text-[#F59E0B] font-medium">
-            In-flight dispatches
+        </div>
+
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
+          <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Failed</span>
+            <XCircle className="h-3.5 w-3.5 text-[#DC2626] dark:text-[#EF4444]" />
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#DC2626] dark:text-[#EF4444]">
+            {failedOrders.toLocaleString()}
           </div>
         </div>
 
-        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-4 space-y-2">
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
           <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
-            <span className="text-[11px] font-medium uppercase tracking-wider">Refunded</span>
-            <RotateCcw className="h-4 w-4 text-[#DC2626] dark:text-[#EF4444]" />
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Refunded</span>
+            <RotateCcw className="h-3.5 w-3.5 text-[#DC2626] dark:text-[#EF4444]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-[#111318] dark:text-[#F4F4F6]">
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#DC2626] dark:text-[#EF4444]">
             {refundedOrders.toLocaleString()}
           </div>
-          <div className="text-[11px] text-[#DC2626] dark:text-[#EF4444] font-medium">
-            Credited back to wallet
+        </div>
+
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
+          <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Pending</span>
+            <Hourglass className="h-3.5 w-3.5 text-[#D97706] dark:text-[#F59E0B]" />
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#B45309] dark:text-[#F59E0B]">
+            {pendingOrders.toLocaleString()}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-[#E5E2DC] dark:border-[#262A34] bg-white dark:bg-[#14161B] p-3 sm:p-3.5 space-y-1">
+          <div className="flex items-center justify-between text-[#5A606B] dark:text-[#949AA6]">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Cancelled</span>
+            <Ban className="h-3.5 w-3.5 text-[#5A606B] dark:text-[#949AA6]" />
+          </div>
+          <div className="text-lg sm:text-xl font-bold font-mono tabular-nums text-[#5A606B] dark:text-[#949AA6]">
+            {cancelledOrders.toLocaleString()}
           </div>
         </div>
       </div>
