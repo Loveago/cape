@@ -74,8 +74,8 @@ const NAV_ITEMS: NavItem[] = [
 
 const BOTTOM_NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/buy-now", label: "Buy", icon: Zap },
   { href: "/dashboard/send", label: "Bulk", icon: ShoppingCart },
+  { href: "/dashboard/buy-now", label: "Buy", icon: Zap },
   { href: "/dashboard/orders", label: "Orders", icon: ClipboardList },
   { href: "/dashboard/billing", label: "Wallet", icon: Wallet },
 ];

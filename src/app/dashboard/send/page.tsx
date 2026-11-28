@@ -159,15 +159,17 @@ export default function SendOrderPage() {
         .filter((p) => p.price == null || p.price > 0)
         .map((p) => p.network)
     );
-    return NETWORKS.filter((n) => present.has(n));
+    const ordered = NETWORKS.filter((n) => present.has(n)) as string[];
+    const extras = Array.from(present).filter((n) => !(NETWORKS as readonly string[]).includes(n));
+    return [...ordered, ...extras];
   }, [packages, loading]);
 
   // Safe active network resolution: always falls back to the first available network
   // if current selection is disabled or not in availableNetworks
   const activeNetwork: NetworkProvider = React.useMemo(() => {
     if (availableNetworks.length === 0) return network;
-    if (availableNetworks.includes(network)) return network;
-    return availableNetworks[0];
+    if (availableNetworks.includes(network)) return network as NetworkProvider;
+    return availableNetworks[0] as NetworkProvider;
   }, [network, availableNetworks]);
 
   // Restore draft from localStorage on mount
@@ -853,7 +855,7 @@ export default function SendOrderPage() {
               const minPrice = validPrices.length > 0 ? Math.min(...validPrices) : null;
 
               // Network visual brand configs
-              const isMtn = n === "MTN";
+              const isMtn = n === "MTN" || n.toUpperCase().includes("MTN");
               const isTelecel = n === "TELECEL";
               const isBigTime = n === "AIRTELTIGO_BIGTIME";
 
@@ -887,7 +889,7 @@ export default function SendOrderPage() {
                 <button
                   key={n}
                   type="button"
-                  onClick={() => setNetwork(n)}
+                  onClick={() => setNetwork(n as NetworkProvider)}
                   disabled={!submissionEnabled}
                   className={cn(
                     "group relative flex items-center gap-3.5 rounded-2xl border p-3.5 text-left transition-all duration-200 cursor-pointer shadow-xs",

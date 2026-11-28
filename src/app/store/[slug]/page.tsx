@@ -120,15 +120,23 @@ export default async function PublicStorePage({
     include: { dataPackage: true },
   });
 
-  const groups = NETWORK_ORDER.map((network) => {
-    const items = products.filter((p) => p.dataPackage.network === network);
-    if (items.length === 0) return null;
-    return {
-      network: network as NetworkProvider,
-      count: items.length,
-      min: Math.min(...items.map((p) => fromPesewas(p.sellingPrice))),
-    };
-  }).filter((g): g is NonNullable<typeof g> => g !== null);
+  const seenNetworks = new Set<string>(NETWORK_ORDER);
+  const extraNetworks = Array.from(
+    new Set(products.map((p) => p.dataPackage.network).filter((n) => !seenNetworks.has(n)))
+  );
+  const orderedNetworks: string[] = [...NETWORK_ORDER, ...extraNetworks];
+
+  const groups = orderedNetworks
+    .map((network) => {
+      const items = products.filter((p) => p.dataPackage.network === network);
+      if (items.length === 0) return null;
+      return {
+        network,
+        count: items.length,
+        min: Math.min(...items.map((p) => fromPesewas(p.sellingPrice))),
+      };
+    })
+    .filter((g): g is NonNullable<typeof g> => g !== null);
 
   return (
     <div>
@@ -189,7 +197,7 @@ export default async function PublicStorePage({
           gbAmount: p.dataPackage.gbAmount,
           name: p.dataPackage.name,
           price: fromPesewas(p.sellingPrice),
-          network: p.dataPackage.network as NetworkProvider,
+          network: p.dataPackage.network,
           validity: "90 days",
         }))}
         availableNetworks={groups.map((g) => g.network)}

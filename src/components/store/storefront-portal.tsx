@@ -27,7 +27,7 @@ export interface StorefrontProductItem {
   gbAmount: number;
   name: string;
   price: number; // in GHS
-  network: NetworkProvider;
+  network: string;
   validity?: string;
 }
 
@@ -46,7 +46,7 @@ interface StorefrontPortalProps {
     afaPriceGHS?: number;
   };
   products: StorefrontProductItem[];
-  availableNetworks: NetworkProvider[];
+  availableNetworks: string[];
 }
 
 // Carrier prefix detection helper for Ghana
@@ -72,7 +72,7 @@ function whatsappDirectLink(phone: string | null | undefined): string {
   return link || "#";
 }
 
-function carrierMeta(network: NetworkProvider) {
+function carrierMeta(network: string) {
   switch (network) {
     case "MTN":
       return {
@@ -98,13 +98,31 @@ function carrierMeta(network: NetworkProvider) {
         badgeBg: "bg-[#0284C7]/10 text-[#0369A1] dark:text-[#38BDF8]",
         arrowPill: "bg-[#0284C7] text-white",
       };
-    default:
+    case "AIRTELTIGO":
+    case "AIRTELTIGO_ISHARE":
       return {
         label: "AT iShare",
         barColor: "bg-[#005FB8]",
         dotColor: "bg-[#005FB8]",
         badgeBg: "bg-[#005FB8]/10 text-[#1D4ED8] dark:text-[#60A5FA]",
         arrowPill: "bg-[#005FB8] text-white",
+      };
+    default:
+      if (network.toUpperCase().includes("MTN")) {
+        return {
+          label: network,
+          barColor: "bg-[#FFCB05]",
+          dotColor: "bg-[#FFCB05]",
+          badgeBg: "bg-[#FFCB05]/15 text-[#92400E] dark:text-[#FBBF24]",
+          arrowPill: "bg-[#FFCB05] text-[#111318]",
+        };
+      }
+      return {
+        label: network,
+        barColor: "bg-[#1D4ED8]",
+        dotColor: "bg-[#1D4ED8]",
+        badgeBg: "bg-[#1D4ED8]/10 text-[#1D4ED8] dark:text-[#60A5FA]",
+        arrowPill: "bg-[#1D4ED8] text-white",
       };
   }
 }
@@ -602,6 +620,44 @@ export function StorefrontPortal({
                 <span>AT Big Time</span>
               </button>
             )}
+
+            {/* Dynamic / Custom Categories (e.g. MTN OBOLO) */}
+            {availableNetworks
+              .filter(
+                (net) =>
+                  !["MTN", "TELECEL", "AIRTELTIGO", "AIRTELTIGO_ISHARE", "AIRTELTIGO_BIGTIME"].includes(
+                    net
+                  )
+              )
+              .map((net) => {
+                const meta = carrierMeta(net);
+                const isSelected = activeNetwork === net;
+                return (
+                  <button
+                    key={net}
+                    type="button"
+                    onClick={() => setActiveNetwork(net)}
+                    className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer border ${
+                      isSelected
+                        ? net.toUpperCase().includes("MTN")
+                          ? "bg-[#FFCB05] text-[#111318] border-[#FFCB05]"
+                          : "bg-[#1D4ED8] text-white border-[#1D4ED8]"
+                        : "bg-white dark:bg-[#14161B] text-[#111318] dark:text-[#F4F4F6] border-[#E5E2DC] dark:border-[#262A34] hover:bg-[#F3F1EC] dark:hover:bg-[#1C1F26]"
+                    }`}
+                  >
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        isSelected
+                          ? net.toUpperCase().includes("MTN")
+                            ? "bg-[#111318]"
+                            : "bg-white"
+                          : meta.dotColor
+                      }`}
+                    />
+                    <span>{meta.label}</span>
+                  </button>
+                );
+              })}
           </div>
 
           {/* Neutral High-Contrast Bundle Card Grid */}

@@ -81,7 +81,7 @@ export const mtnPhoneSchema = z.preprocess(
 
 export const sendOrderLineSchema = z.object({
   phoneNumber: phoneSchema,
-  network: z.enum(NETWORKS as [string, ...string[]]),
+  network: z.string().trim().min(1).max(60),
   gbAmount: z.coerce.number().positive(),
   packageId: z.string().optional(),
 });

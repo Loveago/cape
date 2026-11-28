@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/components/toast";
 import { formatGHS } from "@/lib/types";
 
-type Network = "MTN" | "TELECEL" | "AIRTELTIGO";
+type Network = string;
 
 interface DataPackage {
   id: string;
@@ -115,6 +115,21 @@ export default function BuyNowPage() {
   useEffect(() => {
     loadPackages();
   }, []);
+
+  const networkTabs = useMemo(() => {
+    const baseIds = new Set(NETWORK_TABS.map((t) => t.id));
+    const extras = Array.from(
+      new Set(packages.map((p) => p.network).filter((n) => !baseIds.has(n)))
+    ).map((n) => ({
+      id: n,
+      label: n,
+      dot: n.toUpperCase().includes("MTN") ? "bg-[#FFCB05]" : "bg-[#1D4ED8]",
+      arrowPill: n.toUpperCase().includes("MTN")
+        ? "bg-[#FFCB05] text-[#111318]"
+        : "bg-[#1D4ED8] text-white",
+    }));
+    return [...NETWORK_TABS, ...extras];
+  }, [packages]);
 
   const filteredPackages = useMemo(() => {
     return packages
@@ -275,7 +290,7 @@ export default function BuyNowPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         {/* Carrier Tabs */}
         <div className="inline-flex flex-wrap items-center gap-2">
-          {NETWORK_TABS.map((net) => {
+          {networkTabs.map((net) => {
             const active = selectedNetwork === net.id;
             const count = packages.filter((p) => p.network === net.id).length;
             return (

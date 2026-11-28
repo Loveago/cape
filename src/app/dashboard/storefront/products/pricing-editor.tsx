@@ -314,7 +314,14 @@ export function PricingEditor({
 
       {/* Network Filter Strip */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
-        {["MTN", "TELECEL", "AIRTELTIGO"].map((n) => {
+        {Array.from(
+          new Set([
+            "MTN",
+            "TELECEL",
+            "AIRTELTIGO",
+            ...packageList.map((p) => p.network),
+          ])
+        ).map((n) => {
           const isActive = filter === n;
           return (
             <button

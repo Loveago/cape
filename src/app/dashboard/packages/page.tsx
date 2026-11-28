@@ -31,7 +31,11 @@ export default async function PackagesPage() {
     }))
   );
 
-  const groups: PackageGroup[] = (["MTN", "TELECEL", "AIRTELTIGO", "AIRTELTIGO_BIGTIME"] as const)
+  const defaultOrder = ["MTN", "TELECEL", "AIRTELTIGO", "AIRTELTIGO_BIGTIME"];
+  const extraOrder = Array.from(
+    new Set(packagePriceList.map((p) => p.network).filter((n) => !defaultOrder.includes(n)))
+  );
+  const groups: PackageGroup[] = [...defaultOrder, ...extraOrder]
     .map((network) => ({
       network,
       packages: packagePriceList.filter((p) => p.network === network),
